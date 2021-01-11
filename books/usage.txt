@@ -1,0 +1,8 @@
+Take in python3 filename some-operation [options]
+Read contents of file
+Do one of three things depending on options:
+1. TITLES: Given a search string S, print a list of books whose titles contain S (case-insensitive).
+2. AUTHORS: Given a search string S, print a list of authors whose names contain S (case-insensitive). For each such author, print a list of the author's books.
+3. BOOKS: Given a range of years A to B, print a list of books published between years A and B, inclusive.
+
+Print out results for each case

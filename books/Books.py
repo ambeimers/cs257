@@ -19,14 +19,14 @@ def get_parsed_arguments():
 	parser.add_argument('--title', '-t', default='', nargs='*')
 
 	# --year or -y
-	parser.add_argument('--year', '-y', default=['0', '2021'], nargs='*')
+	parser.add_argument('--year', '-y', default='0 2021', nargs='*')
 
 	# --version or -v
-	parser.add_argument('--version', '-v')
+	parser.add_argument('--version', '-v', action='version', version = '%(prog)s 1.0 by Chloe and Ann, last updated January 15th, 2021')
 
 	return parser.parse_args()
 
-
+# Currently prints and inclusive list based on filters, but also prints some things twice. Do we want inclusive? How do we get rid of duplicates?
 def sort_by_author(sorted_list, author):
 	for i in range(len(book_list)-1):
 		if author.lower() in book_list[i][2].lower():
@@ -40,6 +40,9 @@ def sort_by_title(sorted_list, title):
 	return sorted_list
 
 def sort_by_year(sorted_list, year):
+	if year == []:
+		year = ['0', '2021']
+		# Not ideal to have this hardcoded
 	if len(year) == 2:
 		for i in range(len(book_list)-1):
 			if book_list[i][1] >= year[0] and book_list[i][1] <= year[1]:

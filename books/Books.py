@@ -14,45 +14,42 @@ def get_parsed_arguments():
 	parser.add_argument('file')
 	parser.add_argument('--author', '-a', default='', nargs='*')
 	parser.add_argument('--title', '-t', default='', nargs='*')
-	parser.add_argument('--year', '-y', nargs='*')
+	parser.add_argument('--year', '-y', default='0 2021', nargs='*')
 	parser.add_argument('--version', '-v', action='version', version = '%(prog)s 1.0, Chloe Morscheck and Ann Beimers, CS 257, January 15, 2021')
 
 	return parser.parse_args()
 
-def sort_by_author(sorted_list, author):
-	#change name (not sorting - filtering?)
-	#option 1: remove stuff that doesn't match from sorted_list
-	#new_list = []
-	#for book in sorted_list:
-	#if book matches, append to new_list and return new_list
-	for i in range(len(book_list)):
-		if author.lower() in book_list[i][2].lower():
-			if sorted_list.count(book_list[i]) == 0:
-				sorted_list.append(book_list[i])
-	return sorted_list
+def filter_by_author(filtered_list, author):
+	new_list = []
+	for i in range(len(filtered_list)):
+		if author.lower() in filtered_list[i][2].lower():
+			if new_list.count(filtered_list[i]) == 0:
+				new_list.append(filtered_list[i])
+	return new_list
 
-def sort_by_title(sorted_list, title):
-	for i in range(len(book_list)):
-		if title.lower() in book_list[i][0].lower():
-			if sorted_list.count(book_list[i]) == 0:
-				sorted_list.append(book_list[i])
-	return sorted_list
+def filter_by_title(filtered_list, title):
+	new_list = []
+	for i in range(len(filtered_list)):
+		if title.lower() in filtered_list[i][0].lower():
+			if new_list.count(filtered_list[i]) == 0:
+				new_list.append(filtered_list[i])
+	return new_list
 
-def sort_by_year(sorted_list, year):
+def filter_by_year(filtered_list, year):
+	new_list = []
 	if year == []:
 		year = ['0', '2021']
-		# Default case: not ideal to have this hardcoded
 	if len(year) == 2:
-		for i in range(len(book_list)):
-			if book_list[i][1] >= year[0] and book_list[i][1] <= year[1]:
-				if sorted_list.count(book_list[i]) == 0:
-					sorted_list.append(book_list[i])
+		for i in range(len(filtered_list)):
+			if filtered_list[i][1] >= year[0] and filtered_list[i][1] <= year[1]:
+				if new_list.count(filtered_list[i]) == 0:
+					new_list.append(filtered_list[i])
 	else:
-		for i in range(len(book_list)):
-			if book_list[i][1] == year[0]:
-				if sorted_list.count(book_list[i]) == 0:
-					sorted_list.append(book_list[i])
-	return sorted_list
+		for i in range(len(filtered_list)):
+			if filtered_list[i][1] == year[0]:
+				if new_list.count(filtered_list[i]) == 0:
+					new_list.append(filtered_list[i])
+	return new_list
 
 def main():
 	arguments = get_parsed_arguments()
@@ -64,17 +61,17 @@ def main():
 		for row in reader:
 			book_list.append([row[0],row[1],row[2]])
 
-	#filtered_list = book_list
+	filtered_list = book_list
 
 	if author != '':
-		filtered_list = filtered_by_author(book_list, author)
+		filtered_list = filter_by_author(filtered_list, author)
 	if title != '':
-		sorted_list = sort_by_title(sorted_list, title)
+		filtered_list = filter_by_title(filtered_list, title)
 	if arguments.year != '0 2021':
-		sorted_list = sort_by_year(sorted_list, arguments.year)
+		filtered_list = filter_by_year(filtered_list, arguments.year)
 
-	for i in range(len(sorted_list)):
-		print(sorted_list[i][0] + ", " + sorted_list[i][1] + ", " + sorted_list[i][2])
+	for i in range(len(filtered_list)):
+		print(filtered_list[i][0] + ", " + filtered_list[i][1] + ", " + filtered_list[i][2])
 
 if __name__ == '__main__':
 	main()

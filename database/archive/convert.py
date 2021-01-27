@@ -15,9 +15,14 @@ with open('athlete_events.csv') as f:
   for row in csv_reader:
     if row[0] == athlete_id:
       continue
-    try:      
+    try:
       athlete_id = row[0]
       name = row[1]
+      for i in range(len(name)):
+        if i > len(name)-1:
+          break
+        if name[i] == ',':
+          name = name[0:i]+name[i+1:]
       sex = row[2]
       age = int(row[3])
       height_centimeters = int(row[4])
@@ -33,10 +38,10 @@ with open('athlete_events.csv') as f:
       medal = row[14]
       print(f"{athlete_id}, {name}, {sex}, {team}", file=athletes)
       print(f"{game}, {year}, {season}, {city}", file=games)
-      print(f"{event}, {sport}", file=events)      
+      print(f"{event}, {sport}", file=events)
     except ValueError:
       continue
-     
+
 
 with open('noc_regions.csv') as f:
   csv_reader = csv.reader(f)

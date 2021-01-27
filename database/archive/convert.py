@@ -33,11 +33,14 @@ def read_files():
         height = int(row[4])
         weight = int(row[5])
         team = row[6]
+        team = remove_commas(team)
         noc = row[7]
         game = row[8]
+        game = remove_commas(game)
         year = row[9]
         season = row[10]
         city = row[11]
+        city = remove_commas(city)
         sport = row[12]
         event = row[13]
         event = remove_commas(event)

@@ -50,15 +50,14 @@ def read_files():
         continue
   with open('noc_regions.csv') as f:
     csv_reader = csv.reader(f)
-    row_number = 1
+    row_count = 1
     for row in csv_reader:
       noc = row[0]
       region = row[1]
       region = remove_commas(region)
       notes = row[2]
-      print(f"{row_number},{noc},{region},{notes}", file=regions)
+      print(f"{row_count},{noc},{region},{notes}", file=regions)
       row_number += 1
-
 
 def main():
   read_files()

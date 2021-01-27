@@ -1,5 +1,5 @@
 '''
-  Database design by Ann and Quoc.
+  Database design by Ann Beimers and Quoc Nguyen, January 26th, 2021.
 '''
 
 CREATE TABLE athletes(

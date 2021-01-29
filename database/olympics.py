@@ -39,6 +39,7 @@ def query_medals(cursor):
 		search_string = 'Gold'
 		query = 'SELECT COUNT(medal), noc FROM medals WHERE medal = %s GROUP BY noc ORDER BY COUNT(medal) DESC'
 		cursor.execute(query, (search_string,))
+		print(cursor.query)
 	except Exception as e:
 		print(e)
 		exit()
@@ -84,7 +85,7 @@ def main():
 	if arguments.athletes:
 		noc = ' '.join(arguments.athletes)
 		query_athletes(noc, cursor)
-	if arguments.medals:
+	if arguments.medals is not None:
 		query_medals(cursor)
 	if arguments.sport:
 		sport = ' '.join(arguments.sport)

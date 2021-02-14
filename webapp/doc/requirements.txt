@@ -1,0 +1,26 @@
+Ann Beimers and Matthew Smith-Erb
+
+Description of Data: Describes each track released between 1921 and 2021 with various indicators such as accousticness, danceability etc.
+Each artist and year also has a mean score for all of these indicators based on their tracks. 
+https://www.kaggle.com/yamaerenay/spotify-dataset-19212020-160k-tracks?select=data_by_genres.csv
+
+
+User stories:
+
+
+Story: A music fan can find new artists based on their mom’s favorite artists, so they can make her a playlist for her birthday. 
+
+Implementation: We would have two search bars for artists, and an option for the “vibe” they are going for. It will display the top 3 artists which match the two searched artists,
+ with their most popular songs in the Spotify web player, and also the “vibe” they match.
+
+
+Story: Someone is having an argument with their friend and wants to know if Taylor Swift’s music is more danceable than Katy Perry’s music.
+
+Implementation: There are two search bars for each artist, when they enter the artists there is a visual representation below them as to who is more danceable,
+ as well as other attributes about their music (like accousticness, tempo etc). This will also work for comparing two years and two specific songs. 
+
+
+Story: A classical music fan wants to know what Bach’s most acoustic piece of music is to listen to while studying. 
+
+Implementation: User only enters in one artist -- Bach -- and gets the two extreme songs for each attribute (e.g. the most acoustic and least acoustic songs).
+Visual representation similar to comparator.

@@ -1,0 +1,19 @@
+Ann Beimers and Matthew Smith-Erb
+
+Ideas for our webapp datasets:
+Poems from poetryfoundation.org
+file name: all.csv
+link: https://www.kaggle.com/ultrajack/modern-renaissance-poetry
+Comments: For every poem on poetryfoundation.org, this dataset holds the author, content, poem name, age, and type. We wish there was a publication date for each poem, but the age column is also interesting. We like that for age and type, there are specific categories already made by poetryfoundation so the data is clean.
+
+Spotify Dataset 1921-2020, 160k+ Tracks
+file names: data.csv, data_by_artist.csv, data_by_genres.csv, data_by_year.csv, data_w_genres.csv
+link: https://www.kaggle.com/yamaerenay/spotify-dataset-19212020-160k-tracks?select=data_w_genres.csv
+note: unsure about licensing. "Community Data License Agreement - Sharing - Version 1.0"
+Comments: Data is already sorted into multiple different files (e.g. data_by_artist.csv, data_by_genres.csv). There are indices assigned to songs such as liveliness, acoustic etc. Each artist, genre, and year also has the average of these indices. This preprocess data is very useful. One drawback is that it is rather large at 40MB.
+
+United States Department of Agriculture Plants Database
+file name: TBD
+link: https://plants.sc.egov.usda.gov/adv_search.html
+note: no defined license
+Comments: This data includes many attributes about plants (scientific name, location, etc). One drawback of this data is that it is not in csv format. There also seems to be a lot of missing data.

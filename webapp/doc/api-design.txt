@@ -1,0 +1,68 @@
+Ann Beimers and Matthew Smith-Erb
+
+REQUEST: /artist/{artist_id}
+RESPONSE: A dictionary with each attribute of the artist being a key in the dictionary,
+and the associated floating values as the dict value.
+	artist_name -- string
+	acousticness -- float
+	danceability -- float
+	duration -- integer
+	energy -- float
+	speechiness -- float
+	loudness -- float
+	tempo -- float
+	popularity -- integer
+	valence -- float
+
+REQUEST: /song/{song_id}
+RESPONSE: A dictionary with each attribute of the song being a key in the dictionary,
+and the associated floating values as the dict value.
+	song_name -- string
+	artist_name -- string
+	acousticness -- float
+	danceability -- float
+	duration -- integer
+	energy -- float
+	speechiness -- float
+	loudness -- float
+	tempo -- float
+	popularity -- integer
+	valence -- float
+	year -- integer
+
+REQUEST: /year/{integer_year}
+RESPONSE: A dictionary with each attribute of the year being a key in the dictionary,
+and the associated floating values as the dict value.
+	acousticness -- float
+	danceability -- float
+	duration -- integer
+	energy -- float
+	speechiness -- float
+	loudness -- float
+	tempo -- float
+	popularity -- integer
+	valence -- float
+
+REQUEST: /artist/{artist_id}/?attribute_name={attribute}?sort_by={highest or lowest}
+RESPONSE: A dictionary with song_id and song_title 
+	song_id -- string
+	song_title -- string
+
+REQUEST: /year/{integer_year}/?attribute_name={attribute}?sort_by={highest or lowest}
+RESPONSE: A dictionary with song_id and song_title 
+	song_id -- string
+	song_title -- string
+
+REQUEST: /recommend/?artist1={artist1_id}?artist2={artist2_id}?attribute_name={attribute}
+RESPONSE: A list of JSON dictionaries, and within each dictionary, there is a key for artist_id and artist_name for the artist
+that matches artist1 and artist2 by an algorithm which will use attribute_name 
+	recommended_artist1 -- dictionary
+	recommended_artist2 -- dictionary
+	recommended_artist3 -- dictionary
+	
+REQUEST: /search/artist/{search_string}
+RESPONSE: A list of 5 JSON dictionaries, within each dictionary there is a key for artist_id and artist_name which matches the search string
+and sorts by how closely it matches
+	artist1 -- dictionary
+	...
+	artist5 -- dictionary

@@ -12,12 +12,12 @@ api = flask.Blueprint('api', __name__)
 
 @api.route('/year/<year>')
 def get_year(year):
-    parameter = (str(year),)
+    '''parameter = (str(year),)
     query = '''
-    SELECT year, acousticness, danceability, duration, energy, loudness, speechiness, tempo, valence, popularity
-    FROM years
-    WHERE
-    year = %s
+    #SELECT year, acousticness, danceability, duration, energy, loudness, speechiness, tempo, valence, popularity
+    #FROM years
+    #WHERE
+    #year = %s
     '''
     connection = get_connection(database, user, password)
     year_data = get_query(query, parameter, connection)
@@ -32,7 +32,9 @@ def get_year(year):
     year_dict["speechiness"] = year_data[6]
     year_dict["tempo"] = year_data[7]
     year_dict["valence"] = year_data[8]
-    year_dict["popularity"] = year_data[9]
+    year_dict["popularity"] = year_data[9]'''
+    year_dict = {}
+    year_dict["year"] = 1900
     return json.dumps(year_dict)
 
 def get_connection(database, user, password):

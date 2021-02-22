@@ -8,33 +8,36 @@ import json
 import config
 import psycopg2
 
+#sensitive infromation about the database to access
+from config import password
+from config import database
+from config import user
+
 api = flask.Blueprint('api', __name__)
 
 @api.route('/year/<year>')
 def get_year(year):
-    '''parameter = (str(year),)
+    parameter = (str(year),)
     query = '''
-    #SELECT year, acousticness, danceability, duration, energy, loudness, speechiness, tempo, valence, popularity
-    #FROM years
-    #WHERE
-    #year = %s
+    SELECT year, acousticness, danceability, duration, energy, loudness, speechiness, tempo, valence, popularity
+    FROM years
+    WHERE
+    year = %s
     '''
     connection = get_connection(database, user, password)
     year_data = get_query(query, parameter, connection)
+    year_dict = {}
+    year_dict["year"] = year_data[0][0]
+    year_dict["acousticness"] = year_data[0][1]
+    year_dict["danceability"] = year_data[0][2]
+    year_dict["duration"] = year_data[0][3]
+    year_dict["energy"] = year_data[0][4]
+    year_dict["loudness"] = year_data[0][5]
+    year_dict["speechiness"] = year_data[0][6]
+    year_dict["tempo"] = year_data[0][7]
+    year_dict["valence"] = year_data[0][8]
+    year_dict["popularity"] = year_data[0][9]
 
-    year_dict = {}
-    year_dict["year"] = year_data[0]
-    year_dict["acousticness"] = year_data[1]
-    year_dict["danceability"] = year_data[2]
-    year_dict["duration"] = year_data[3]
-    year_dict["energy"] = year_data[4]
-    year_dict["loudness"] = year_data[5]
-    year_dict["speechiness"] = year_data[6]
-    year_dict["tempo"] = year_data[7]
-    year_dict["valence"] = year_data[8]
-    year_dict["popularity"] = year_data[9]'''
-    year_dict = {}
-    year_dict["year"] = 1900
     return json.dumps(year_dict)
 
 def get_connection(database, user, password):

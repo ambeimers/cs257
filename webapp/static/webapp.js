@@ -14,14 +14,16 @@ function initialize() {
         element.onclick = onSearchButton;
     }
 
-    var years = []
+    var years = [];
     for (var y = 1920; y++; y < 2022){
         years.push(y);
     }
-    var datalist = document.getElementById("years")
+    var datalist = document.getElementById("years");
+		var option = '';
     for(var i =0; i ++; i<years.length){
-        
+        option += '<option value = "' + years[i] + '" />';
     }
+		datalist.innerHTML = option;
 }
 
 function getAPIBaseURL() {

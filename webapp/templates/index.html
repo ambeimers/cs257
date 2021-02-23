@@ -4,7 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='webapp.css') }}" />
     <script type="text/javascript" src="{{ url_for('static', filename='webapp.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='yearSearch.js') }}"></script>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
     <title>CS 257: Software Design</title>
 </head>
@@ -14,7 +13,7 @@
 
     <input id="search_input" type="number" list="years" name="year" placeholder="Enter a year"/>
     <datalist id="years">
-
+			
     </datalist>
     <button id="onSearchButton">Search</button>
 

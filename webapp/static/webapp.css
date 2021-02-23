@@ -1,0 +1,21 @@
+/* Ann Beimers and Matthew Smith-Erb */
+
+body {
+    margin: 0px;
+		text-align: center;
+    font-family: Georgia;
+    background: white;
+}
+
+ul {
+	list-style-type: square;
+	font-size: 40px;
+}
+
+#title {
+	background-color: #1DD05D;
+	margin: 0px;
+	text-align: center;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}

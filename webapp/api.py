@@ -1,6 +1,5 @@
 '''
     Ann Beimers and Matthew Smith-Erb
-    Flask API
 '''
 import sys
 import flask

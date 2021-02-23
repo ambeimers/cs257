@@ -1,10 +1,4 @@
-/*
- * webapp.js
- * Jeff Ondich
- * 6 November 2020
- *
- * A little bit of Javascript for the tiny web app sample for CS257.
- */
+//Ann Beimers and Matthew Smith-Erb
 
 window.onload = initialize;
 
@@ -13,17 +7,6 @@ function initialize() {
     if (element) {
         element.onclick = onSearchButton;
     }
-
-    var years = [];
-    for (var y = 1920; y++; y < 2022){
-        years.push(y);
-    }
-    var datalist = document.getElementById("years");
-		var option = '';
-    for(var i =0; i ++; i<years.length){
-        option += '<option value = "' + years[i] + '" />';
-    }
-		datalist.innerHTML = option;
 }
 
 function getAPIBaseURL() {
@@ -34,14 +17,18 @@ function getAPIBaseURL() {
 function onSearchButton() {
     var year_input = document.getElementById("search_input").value
     var url = getAPIBaseURL() + '/year/' + year_input;
-    alert(url)
     fetch(url, {method: 'get'})
 
     .then((response) => response.json())
 
     .then(function(attributes) {
         var listBody = '';
-        listBody += '<li>' + 'acousticness:' + attributes["acousticness"] + '</li>\n';
+        listBody +=
+				'<li>' + 'Year: ' + attributes["year"] + '</li>\n'
+				+ '<li>' + 'Acousticness: ' + attributes["acousticness"] + '</li>\n'
+				+ '<li>' + 'Danceability: ' + attributes["danceability"] + '</li>\n'
+				+ '<li>' + 'Duration (ms): ' + attributes["duration"] + '</li>\n'
+				+ '<li>' + 'Energy: ' + attributes["energy"] + '</li>\n';
 
         var attributeListElement = document.getElementById('attribute_list');
         if (attributeListElement) {

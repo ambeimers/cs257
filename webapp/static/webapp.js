@@ -9,14 +9,18 @@
 window.onload = initialize;
 
 function initialize() {
-    var element = document.getElementById('cats_button');
+    var element = document.getElementById('search');
     if (element) {
-        element.onclick = onCatsButton;
+        element.onclick = onSearchButton;
     }
 
-    var element = document.getElementById('dogs_button');
-    if (element) {
-        element.onclick = onDogsButton;
+    var years = []
+    for (var y = 1920; y++; y < 2022){
+        years.push(y);
+    }
+    var datalist = document.getElementById("years")
+    for(var i =0; i ++; i<years.length){
+        
     }
 }
 
@@ -25,27 +29,21 @@ function getAPIBaseURL() {
     return baseURL;
 }
 
-function onCatsButton() {
-    var url = getAPIBaseURL() + '/cats/';
-
+function onSearchButton() {
+    var year_input = document.getElementById("search_input").value
+    var url = getAPIBaseURL() + '/year/' + year_input;
+    alert(url)
     fetch(url, {method: 'get'})
 
     .then((response) => response.json())
 
-    .then(function(cats) {
+    .then(function(attributes) {
         var listBody = '';
-        for (var k = 0; k < cats.length; k++) {
-            var cat = cats[k];
-            listBody += '<li>' + cat['name']
-                      + ', ' + cat['birth_year']
-                      + '-' + cat['death_year']
-                      + ', ' + cat['description'];
-                      + '</li>\n';
-        }
+        listBody += '<li>' + 'acousticness:' + attributes["acousticness"] + '</li>\n';
 
-        var animalListElement = document.getElementById('animal_list');
-        if (animalListElement) {
-            animalListElement.innerHTML = listBody;
+        var attributeListElement = document.getElementById('attribute_list');
+        if (attributeListElement) {
+            attributeListElement.innerHTML = listBody;
         }
     })
 
@@ -53,33 +51,3 @@ function onCatsButton() {
         console.log(error);
     });
 }
-
-function onDogsButton() {
-    var url = getAPIBaseURL() + '/dogs/';
-
-    fetch(url, {method: 'get'})
-
-    .then((response) => response.json())
-
-    .then(function(dogs) {
-        var listBody = '';
-        for (var k = 0; k < dogs.length; k++) {
-            var dog = dogs[k];
-            listBody += '<li>' + dog['name']
-                      + ', ' + dog['birth_year']
-                      + '-' + dog['death_year']
-                      + ', ' + dog['description'];
-                      + '</li>\n';
-        }
-
-        var animalListElement = document.getElementById('animal_list');
-        if (animalListElement) {
-            animalListElement.innerHTML = listBody;
-        }
-    })
-
-    .catch(function(error) {
-        console.log(error);
-    });
-}
-

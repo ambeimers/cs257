@@ -8,7 +8,6 @@ CREATE TABLE songs(
     id integer,
     spotify_id text,
     song_name text,
-    artist_name text,
 		acousticness float,
 		danceability float,
 		duration float,
@@ -23,7 +22,6 @@ CREATE TABLE songs(
 
 CREATE TABLE artists(
     id integer,
-    spotify_id text,
     artist_name text,
 		acousticness float,
 		danceability float,

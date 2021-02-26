@@ -156,6 +156,45 @@ def get_song_year_attribute(year, attribute_name):
 
     return json.dumps(song_dict)
 
+@api.route('/search/artist/<search_string>')
+def search_artist(search_string):
+    parameter = (str(search_string),)
+    #levenshtein helps get closest string matches
+    query = '''
+    SELECT id, artist_name FROM artists
+    ORDER BY levenshtein_less_equal(artists.artist_name, %s, 1, 1, 1, 25) LIMIT 5
+    '''
+    connection = get_connection(database, user, password)
+    search_data = get_query(query, parameter, connection)
+    artists = []
+    for i in range(5):
+        artist_dict = {}
+        artist_dict["id"] = search_data[i][0]
+        artist_dict["artist_name"] = search_data[i][1]
+        artists.append(artist_dict)
+
+    return json.dumps(artists)
+
+@api.route('/search/song/<search_string>')
+def search_song(search_string):
+    parameter = (str(search_string),)
+    #levenshtein helps get closest string matches
+    query = '''
+    SELECT id, song_name, year FROM songs
+    ORDER BY levenshtein(songs.song_name, %s, 1, 1, 1) LIMIT 5
+    '''
+    connection = get_connection(database, user, password)
+    search_data = get_query(query, parameter, connection)
+    songs = []
+    for i in range(5):
+        song_dict = {}
+        song_dict["id"] = search_data[i][0]
+        song_dict["song_name"] = search_data[i][1]
+        song_dict["year"] = int(search_data[i][2])
+        songs.append(song_dict)
+
+    return json.dumps(songs)
+
 def get_connection(database, user, password):
     '''Establishes and returns the connection with the postgres database'''
     try:

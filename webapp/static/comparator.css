@@ -21,9 +21,73 @@ ul {
 }
 
 #navbar{
-    background-color: #26ff74;
+  background-color: #26ff74;
 	margin: 0px;
 	text-align: center;
 	padding-bottom: 10px;
 	padding-top: 10px;
+}
+
+#search-contents {
+	display: flex;
+	justify-content: space-evenly;
+	padding-bottom: 40px;
+}
+
+#results-contents {
+	height: 80vh;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+#left-webplayer {
+	width: 20%;
+	background-color: #778899;
+}
+
+#attribute-contents {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	text-align: center;
+	width: 60%;
+	background-color: #E0FFFF;
+}
+
+#right-webplayer {
+	width: 20%;
+	background-color: #778899;
+}
+
+.data {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100%;
+}
+
+.left {
+	display: flex;
+	justify-content: flex-end;
+	width: 25%;
+}
+
+.left-button {
+	width: 200px;
+}
+
+.middle {
+	text-align: center;
+	width: 15%;
+}
+
+.right {
+	display: flex;
+	justify-content: flex-start;
+	width: 25%;
+}
+
+.right-button {
+	width: 86px;
+
 }

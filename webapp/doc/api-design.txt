@@ -55,6 +55,9 @@ RESPONSE: A dictionary with song_id and song_name
 	spotify_id -- string
 	song_name -- string
 
+REQUEST: songs/year/{year}
+RESPONSE: A dictionary with the key being an attribute, and the value being another dictionary which has spotify_id, song_name, and spotify_id
+
 REQUEST: /recommend/?artist1={artist1_id}?artist2={artist2_id}?attribute_name={attribute}
 RESPONSE: A list of JSON dictionaries, and within each dictionary, there is a key for artist_id and artist_name for the artist
 that matches artist1 and artist2 by an algorithm which will use attribute_name
@@ -68,3 +71,10 @@ and sorts by how closely it matches
 	artist1 -- dictionary
 	...
 	artist5 -- dictionary
+
+REQUEST: /search/song/{search_string}
+RESPONSE: A list of 5 JSON dictionaries, within each dictionary there is a key for song_id and song_name which matches the search string
+and sorts by how closely it matches
+	song1 -- dictionary
+	...
+	song2 -- dictionary

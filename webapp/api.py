@@ -93,7 +93,7 @@ def get_song(song_id):
 @api.route('/song/artist/<artist_id>/<attribute_name>')
 def get_song_artist_attribute(artist_id, attribute_name):
     #stop sql injection, since this has to be passed in through string interpolation
-    potential_attributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity', 'year']
+    potential_attributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
     if attribute_name not in potential_attributes:
         flask.abort(400)
 
@@ -127,7 +127,7 @@ def get_song_artist_attribute(artist_id, attribute_name):
 @api.route('/song/year/<year>/<attribute_name>')
 def get_song_year_attribute(year, attribute_name):
     #stop sql injection, since this has to be passed in through string interpolation
-    potential_attributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity', 'year']
+    potential_attributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
     if attribute_name not in potential_attributes:
         flask.abort(400)
 

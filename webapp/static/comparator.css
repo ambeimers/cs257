@@ -34,6 +34,11 @@ ul {
 	padding-bottom: 40px;
 }
 
+#search-contents > div {
+    width: 33%;
+    text-align: center;
+}
+
 #results-contents {
 	height: 80vh;
 	display: flex;
@@ -73,7 +78,7 @@ ul {
 }
 
 .left-button {
-	width: 200px;
+	width: 100%;
 }
 
 .middle {
@@ -88,6 +93,6 @@ ul {
 }
 
 .right-button {
-	width: 86px;
+	width: 50%;
 
 }

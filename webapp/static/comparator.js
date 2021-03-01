@@ -51,6 +51,8 @@ function assignYearSearch(){
 function yearQuery(){
     var year1 = document.getElementById("option1_input").value;
     var year2 = document.getElementById("option2_input").value;
+    document.getElementById("left-label").innerHTML = year1;
+    document.getElementById("right-label").innerHTML = year2;
     var allAttributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
 
     //Assign the button actions and get the extreme songs

@@ -222,3 +222,7 @@ h2 {
 	background-color: #4CAF50;
 	color: white;
 }
+
+.column-label{
+	font-weight: bold;
+}

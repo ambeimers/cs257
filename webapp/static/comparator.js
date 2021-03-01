@@ -47,6 +47,7 @@ function assignYearSearch(){
     document.getElementById("go").addEventListener("click", yearQuery)
 }
 
+//changes length of bars and assigns their functions
 function yearQuery(){
     var year1 = document.getElementById("option1_input").value;
     var year2 = document.getElementById("option2_input").value;
@@ -151,3 +152,4 @@ window.onclick = function(event) {
       }
     }
   }
+}

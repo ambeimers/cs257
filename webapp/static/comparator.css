@@ -39,13 +39,13 @@ h2 {
 	padding-bottom: 40px;
 }
 
-<<<<<<< HEAD
+
 #search-contents > div {
     width: 33%;
     text-align: center;
 }
 
-=======
+
 /* Dropdown Button */
 .dropbtn {
  background-color: #DCDCDC;
@@ -91,7 +91,7 @@ h2 {
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
 
->>>>>>> 4a6baf64f341bff3c2fe85d9965c2c889c0e11e8
+
 #results-contents {
 	height: 80vh;
 	display: flex;
@@ -186,16 +186,16 @@ h2 {
 	width: 25%;
 }
 
-<<<<<<< HEAD
+
 .left-button {
 	width: 100%;
-=======
+}
 .left1 {
 	background-color: white;
 	color: black;
 	border: 2px solid #4CAF50;
 	width: 200px;
->>>>>>> 4a6baf64f341bff3c2fe85d9965c2c889c0e11e8
+
 }
 
 .left1:hover {
@@ -214,10 +214,10 @@ h2 {
 	width: 25%;
 }
 
-<<<<<<< HEAD
+
 .right-button {
 	width: 50%;
-=======
+}
 .right1 {
 	background-color: white;
 	color: black;
@@ -235,7 +235,6 @@ h2 {
 	color: black;
 	border: 2px solid #4CAF50;
 }
->>>>>>> 4a6baf64f341bff3c2fe85d9965c2c889c0e11e8
 
 .button-go:hover {
 	background-color: #4CAF50;

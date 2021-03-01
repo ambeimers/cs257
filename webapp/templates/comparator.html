@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='comparator.css') }}" />
     <script type="text/javascript" src="{{ url_for('static', filename='comparator.js') }}"></script>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <title>CS 257: Software Design</title>
 </head>
 
@@ -15,21 +17,24 @@
         <h1>Music Mania</h1>
     </div>
     <div id="navbar">
-        <button onclick="location.href='http://localhost:5000/'" id="home">Home</button>
-        <button onclick="location.href='http://localhost:5000/comparator.html'" id="comparator-nav">Comparator</button>
-        <button id="new-music-nav">Find New Music</button>
-        <button id="lookup-nav">Artist/Year Lookup</button>
+        <button onclick="location.href='http://localhost:5000/'" id="home" class="button home">Home</button>
+        <button onclick="location.href='http://localhost:5000/comparator.html'" id="comparator-nav" class="button comparator-nav">Comparator</button>
+        <button id="new-music-nav" class="button new-music-nav">Find New Music</button>
+        <button id="lookup-nav" class="button lookup-nav">Artist/Year Lookup</button>
     </div>
     <div id="content">
         <h2>Comparator</h2>
         <div id="search-contents">
 					<div>
-					<label for="options">What do you want to search for?</label>
-            <select name="options" id="options">
-                <option value="Artists">Artists</option>
-                <option value="Songs">Songs</option>
-                <option value="Years">Years</option>
-            </select>
+						<label for="dropdown">What do you want to search for?</label>
+						<div class="dropdown">
+   						<button onclick="dropdown()" class="dropbtn">Choose 1:</button>
+   							<div id="myDropdown" class="dropdown-content">
+     							<button href="#songs">Songs</button>
+     							<button href="#artists">Artists</button>
+     							<button href="#years">Years</button>
+   						  </div>
+ 						</div>
 				  </div>
 				  <div>
 						<label for="options">Option 1</label>
@@ -41,7 +46,7 @@
 				  </div>
 			</div>
 
-			<button id="go">Go!</button>
+			<button id="go" class="button button-go">Go!</button>
 
 				<h2>RESULTS</h2>
 
@@ -54,13 +59,13 @@
 					<div id="attribute-contents">
 						<div class="data" id="popularity">
 							<div class="left">
-								<button class="left-button"></button>
+								<button class="button left1"></button>
 							</div>
 							<div class="middle">
 								popularity
 							</div>
 							<div class="right">
-								<button class="right-button"></button>
+								<button class="button right1"></button>
 							</div>
 						</div>
 

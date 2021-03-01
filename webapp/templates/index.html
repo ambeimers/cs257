@@ -3,26 +3,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='webapp.css') }}" />
-    <script type="text/javascript" src="{{ url_for('static', filename='webapp.js') }}"></script>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
-    <title>CS 257: Software Design</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='webapp.css') }}" />
+	<script type="text/javascript" src="{{ url_for('static', filename='webapp.js') }}"></script>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+	<title>CS 257: Software Design</title>
 </head>
 
 <body>
-		<div id="title">
-    <h1>Spotify web app</h1>
-
-		<h2> Enter a year between 1920 and 2021: </h2>
-
-    <input id="search_input" type="number" list="years" name="year" placeholder="Enter a year"/>
-    <button id="search">Search</button>
-	  </div>
-
-		<ul id="attribute_list">
-
-		</ul>
+    <div id="title">
+        <h1>Music Mania</h1>
+    </div>
+    <div id="navbar">
+        <button onclick="location.href='http://localhost:5000/'" id="home" class="button home">Home</button>
+        <button onclick="location.href='http://localhost:5000/comparator.html'" id="comparator-nav" class="button comparator-nav">Comparator</button>
+        <button id="new-music-nav" class="button new-music-nav">Find New Music</button>
+        <button id="lookup-nav" class="button lookup-nav">Artist/Year Lookup</button>
+    </div>
 
 
 </body>

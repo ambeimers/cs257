@@ -48,16 +48,17 @@ function assignYearSearch(){
 }
 
 //changes length of bars and assigns their functions
-function yearQuery(){
-    var year1 = document.getElementById("option1_input").value;
-    var year2 = document.getElementById("option2_input").value;
-    document.getElementById("left-label").innerHTML = year1;
-    document.getElementById("right-label").innerHTML = year2;
+function query(queryType, input1, input2){
+    if (queryType != "year" && queryType != "artist"){
+        throw "queryType must be 'songs' or 'artists'";
+    }
+    document.getElementById("left-label").innerHTML = input1;
+    document.getElementById("right-label").innerHTML = input2;
     var allAttributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
 
     //Assign the button actions and get the extreme songs
-    var url1 = getAPIBaseURL() + '/songs/year/' + year1;
-    var url2 = getAPIBaseURL() + '/songs/year/' + year2;
+    var url1 = getAPIBaseURL() + '/songs/' + queryType + '/' + input1;
+    var url2 = getAPIBaseURL() + '/songs/' + queryType + '/' + input2;
     var songs1 = {};
     var songs2 = {};
     Promise.all([
@@ -88,8 +89,8 @@ function yearQuery(){
     });
 
     //Assign correct length of buttons
-    url1 = getAPIBaseURL() + '/year/' + year1;
-    url2 = getAPIBaseURL() + '/year/' + year2;
+    url1 = getAPIBaseURL() + '/' + queryType + '/' + input1;
+    url2 = getAPIBaseURL() + '/' + queryType + '/' + input2;
     Promise.all([
         fetch(url1, {method: 'get'}),
         fetch(url2, {method: 'get'})

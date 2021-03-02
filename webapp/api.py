@@ -158,8 +158,7 @@ def get_song_year_attribute(year, attribute_name):
 
 @api.route('/songs/year/<year>')
 def get_songs_year_attributes(year):
-    year_str = str(year)
-    parameter = (year_str, year_str, year_str, year_str, year_str, year_str, year_str, year_str, year_str)
+    parameter = (str(year),) * 9
     query = '''
     (SELECT 'acousticness' as attribute, songs.spotify_id, songs.song_name, songs.acousticness as value FROM songs WHERE songs.year = %s ORDER BY acousticness DESC LIMIT 1) UNION
     (SELECT 'danceability' as attribute, songs.spotify_id, songs.song_name, songs.danceability as value FROM songs WHERE songs.year = %s ORDER BY danceability DESC LIMIT 1) UNION
@@ -170,6 +169,29 @@ def get_songs_year_attributes(year):
     (SELECT 'tempo' as attribute, songs.spotify_id, songs.song_name, songs.tempo as value FROM songs WHERE songs.year = %s ORDER BY tempo DESC LIMIT 1) UNION
     (SELECT 'valence' as attribute, songs.spotify_id, songs.song_name, songs.valence as value FROM songs WHERE songs.year = %s ORDER BY valence DESC LIMIT 1) UNION
     (SELECT 'popularity' as attribute, songs.spotify_id, songs.song_name, songs.popularity as value FROM songs WHERE songs.year = %s ORDER BY popularity DESC LIMIT 1)
+    '''
+    connection = get_connection(database, user, password)
+    year_data = get_query(query, parameter, connection)
+    year_dict = {}
+
+    for i in range(len(year_data)):
+        year_dict[year_data[i][0]] = {"spotify_id": year_data[i][1], "song_name": year_data[i][2], "value": year_data[i][3]}
+
+    return json.dumps(year_dict)
+
+@api.route('/songs/artist/<artist_id>')
+def get_songs_artist_attributes(artist_id):
+    parameter = (str(artist_id),) * 9
+    query = '''
+    (SELECT 'acousticness' as attribute, songs.spotify_id, songs.song_name, songs.acousticness as value FROM songs, songs_artists WHERE songs.id = songs_artists.song_id AND songs_artists.artist_id = %s ORDER BY acousticness DESC LIMIT 1) UNION
+    (SELECT 'danceability' as attribute, songs.spotify_id, songs.song_name, songs.danceability as value FROM songs, songs_artists WHERE songs.id = songs_artists.song_id AND songs_artists.artist_id = %s ORDER BY danceability DESC LIMIT 1) UNION
+    (SELECT 'duration' as attribute, songs.spotify_id, songs.song_name, songs.duration as value FROM songs, songs_artists WHERE songs.id = songs_artists.song_id AND songs_artists.artist_id = %s ORDER BY duration DESC LIMIT 1) UNION
+    (SELECT 'energy' as attribute, songs.spotify_id, songs.song_name, songs.energy as value FROM songs, songs_artists WHERE songs.id = songs_artists.song_id AND songs_artists.artist_id = %s ORDER BY energy DESC LIMIT 1) UNION
+    (SELECT 'loudness' as attribute, songs.spotify_id, songs.song_name, songs.loudness as value FROM songs, songs_artists WHERE songs.id = songs_artists.song_id AND songs_artists.artist_id = %s ORDER BY loudness DESC LIMIT 1) UNION
+    (SELECT 'speechiness' as attribute, songs.spotify_id, songs.song_name, songs.speechiness as value FROM songs, songs_artists WHERE songs.id = songs_artists.song_id AND songs_artists.artist_id = %s ORDER BY speechiness DESC LIMIT 1) UNION
+    (SELECT 'tempo' as attribute, songs.spotify_id, songs.song_name, songs.tempo as value FROM songs, songs_artists WHERE songs.id = songs_artists.song_id AND songs_artists.artist_id = %s ORDER BY tempo DESC LIMIT 1) UNION
+    (SELECT 'valence' as attribute, songs.spotify_id, songs.song_name, songs.valence as value FROM songs, songs_artists WHERE songs.id = songs_artists.song_id AND songs_artists.artist_id = %s ORDER BY valence DESC LIMIT 1) UNION
+    (SELECT 'popularity' as attribute, songs.spotify_id, songs.song_name, songs.popularity as value FROM songs, songs_artists WHERE songs.id = songs_artists.song_id AND songs_artists.artist_id = %s ORDER BY popularity DESC LIMIT 1)
     '''
     connection = get_connection(database, user, password)
     year_data = get_query(query, parameter, connection)

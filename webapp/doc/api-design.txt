@@ -56,7 +56,12 @@ RESPONSE: A dictionary with song_id and song_name
 	song_name -- string
 
 REQUEST: songs/year/{year}
-RESPONSE: A dictionary with the key being an attribute, and the value being another dictionary which has spotify_id, song_name, and spotify_id
+RESPONSE: A dictionary with the key being an attribute, and the value being another dictionary which has spotify_id, song_name, and spotify_id.
+The song corresponding to a particular attribute is the song that came out in the year which has the highest value of the attribute.
+
+REQUEST: songs/artist/{artist_id}
+RESPONSE: A dictionary with the key being an attribute, and the value being another dictionary which has spotify_id, song_name, and spotify_id.
+The song corresponding to a particular attribute is the song by the given artist which has the highest value of the attribute.
 
 REQUEST: /recommend/?artist1={artist1_id}?artist2={artist2_id}?attribute_name={attribute}
 RESPONSE: A list of JSON dictionaries, and within each dictionary, there is a key for artist_id and artist_name for the artist

@@ -26,23 +26,31 @@
         <h2>Comparator</h2>
         <div id="search-contents">
 					<div>
-						<label for="dropdown">What do you want to search for?</label>
-						<div class="dropdown">
-   						<button onclick="dropdown()" class="dropbtn">Choose 1:</button>
-   							<div id="myDropdown" class="dropdown-content">
-     							<button href="#songs">Songs</button>
-     							<button href="#artists">Artists</button>
-     							<button href="#years">Years</button>
-   						  </div>
- 						</div>
+                        <label for="options">What do you want to search for?</label>
+        				<select name="options" id="options">
+        					<option value="artist">Artists</option>
+        					<option value="song">Songs</option>
+        					<option value="year">Years</option>
+        				</select>
 				  </div>
 				  <div>
-						<label for="options">Option 1</label>
-						<input id="option1_input" type="text"/>
+						<label for="options" id="option1_label">Option 1</label>
+						<input id="option1_input" type="text" list="year1"/>
+                        <datalist id="year1">
+                        </datalist>
+                        <ul id="top-options1" class="top-options">
+                            <button >Go!</button>
+                            <button >Go!</button>
+                            <button >Go!</button>
+                            <button >Go!</button>
+                            <button >Go!</button>
+                        </ul>
 				  </div>
 			  	<div>
-						<label for="options">Option 2</label>
-						<input id="option2_input" type="text"/>
+						<label for="options" id="option2_label">Option 2</label>
+						<input id="option2_input" type="text" list="year2"/>
+                        <datalist id="year2">
+                        </datalist>
 				  </div>
 			</div>
 

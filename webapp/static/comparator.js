@@ -33,10 +33,10 @@ function onOptionChange(){
     }
 }
 
-//Generate data list and add it
+//Generate year list and add it
 function assignYearSearch(){
     var datalistBody = "";
-    for (var y = 1920; y <= 2021; y++){
+    for (var y = 1924; y <= 2021; y++){
         datalistBody += "<option>" + y + "</option>\n";
     }
     var year1Datalist = document.getElementById("year1");
@@ -44,13 +44,25 @@ function assignYearSearch(){
 
     year1Datalist.innerHTML = datalistBody;
     year2Datalist.innerHTML = datalistBody;
-    document.getElementById("go").addEventListener("click", yearQuery)
+
+    var year1input = document.getElementById("option1_input");
+    var year2input = document.getElementById("option2_input");
+    document.getElementById("go").addEventListener("click", function(){query("year", year1input, year2input)})
+}
+
+function assignArtistSearch(){
+    
 }
 
 //changes length of bars and assigns their functions
-function query(queryType, input1, input2){
+function query(queryType, input1obj, input2obj){
     if (queryType != "year" && queryType != "artist"){
         throw "queryType must be 'songs' or 'artists'";
+    }
+
+    if(queryType == "year"){
+        var input1 = input1obj.value;
+        var input2 = input2obj.value;
     }
     document.getElementById("left-label").innerHTML = input1;
     document.getElementById("right-label").innerHTML = input2;
@@ -134,25 +146,4 @@ function onBarClick(songInfo, onLeft){
 function getAPIBaseURL() {
     var baseURL = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/api';
     return baseURL;
-}
-
-
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function dropdown() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
 }

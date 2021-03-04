@@ -1,197 +1,174 @@
 <!-- Ann Beimers and Matthew Smith-Erb -->
-
 <!DOCTYPE html>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='comparator.css') }}" />
-    <script type="text/javascript" src="{{ url_for('static', filename='comparator.js') }}"></script>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='comparator.css') }}" />
+		<script type="text/javascript" src="{{ url_for('static', filename='comparator.js') }}"></script>
+		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
 		<link rel="preconnect" href="https://fonts.gstatic.com">
 		<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <title>CS 257: Software Design</title>
-</head>
-
-<body>
-    <div id="title">
-        <h1>Music Mania</h1>
-    </div>
-    <div id="navbar">
-        <button onclick="location.href='http://localhost:5000/'" id="home" class="button home">Home</button>
-        <button onclick="location.href='http://localhost:5000/comparator.html'" id="comparator-nav" class="button comparator-nav">Comparator</button>
-        <button id="new-music-nav" class="button new-music-nav">Find New Music</button>
-        <button id="lookup-nav" class="button lookup-nav">Artist/Year Lookup</button>
-    </div>
-    <div id="content">
-        <h2>Comparator</h2>
-        <div id="search-contents">
-					<div>
-                <label for="options">What do you want to search for?</label>
-        				<select name="options" id="options">
-        					<option value="artist">Artists</option>
-        					<option value="song">Songs</option>
-        					<option value="year">Years</option>
-        				</select>
-				  </div>
-				  <div>
-						<label for="options" id="option1_label">Option 1</label>
-						<input id="option1_input" type="text" list="year1"/>
-                        <datalist id="year1">
-                        </datalist>
-                        <ul id="top-options1" class="top-options">
-                            <button >Go!</button>
-                            <button >Go!</button>
-                            <button >Go!</button>
-                            <button >Go!</button>
-                            <button >Go!</button>
-                        </ul>
-				  </div>
-			  	<div>
-						<label for="options" id="option2_label">Option 2</label>
-						<input id="option2_input" type="text" list="year2"/>
-                        <datalist id="year2">
-                        </datalist>
-				  </div>
+		<title>CS 257: Software Design</title>
+	</head>
+	<body>
+		<div id="title">
+			<h1>Music Mania</h1>
+		</div>
+		<div id="navbar">
+			<button onclick="location.href='http://localhost:5000/'" id="home" class="button home">Home</button>
+			<button onclick="location.href='http://localhost:5000/comparator.html'" id="comparator-nav" class="button comparator-nav">Comparator</button>
+			<button id="new-music-nav" class="button new-music-nav">Find New Music</button>
+			<button id="lookup-nav" class="button lookup-nav">Artist/Year Lookup</button>
+		</div>
+		<div id="content">
+			<h2>Comparator</h2>
+			<div id="search-contents">
+				<div>
+					<label for="options">What do you want to search for?</label>
+					<select name="options" id="options">
+						<option value="artist">Artists</option>
+						<option value="song">Songs</option>
+						<option value="year">Years</option>
+					</select>
+				</div>
+				<div>
+					<label for="options" id="option1_label">Option 1</label>
+					<input class="option-input" id="option1_input" type="text" list="year1"/>
+					<datalist id="year1">
+					</datalist>
+					<div id="top-options1" class="top-options">
+					</div>
+				</div>
+				<div>
+					<label for="options" id="option2_label">Option 2</label>
+					<input class="option-input" id="option2_input" type="text" list="year2"/>
+					<datalist id="year2">
+					</datalist>
+                    <div id="top-options2" class="top-options">
+					</div>
+				</div>
 			</div>
-
 			<button id="go" class="button button-go">Go!</button>
-
-				<h2>RESULTS</h2>
-
-        <div id="results-contents">
-
-					<div class="webplayer-container" id="left-webplayer">
-						<iframe class="webplayer" src="" allow="encrypted-media"></iframe>
-					</div>
-
-					<div id="attribute-contents">
-            <div class="data">
-							<div class="left">
-                    <span class="column-label" id="left-label"></span>
-							</div>
-							<div class="middle">
-
-							</div>
-							<div class="right">
-								<span class="column-label" id="right-label"></span>
-							</div>
+			<h2>RESULTS</h2>
+			<div id="results-contents">
+				<div class="webplayer-container" id="left-webplayer">
+					<iframe class="webplayer" src="" allow="encrypted-media"></iframe>
+				</div>
+				<div id="attribute-contents">
+					<div class="data">
+						<div class="left">
+							<span class="column-label" id="left-label"></span>
 						</div>
-
-						<div class="data" id="popularity">
-							<div class="left">
-								<button class="data-bar left1"></button>
-							</div>
-							<div class="middle">
-								popularity
-							</div>
-							<div class="right">
-								<button class="data-bar right1"></button>
-							</div>
+						<div class="middle">
 						</div>
-
-						<div class="data" id="danceability">
-							<div class="left">
-                                <button class="data-bar left1"></button>
-							</div>
-							<div class="middle">
-								danceability
-							</div>
-							<div class="right">
-                                <button class="data-bar right1"></button>
-							</div>
-						</div>
-
-						<div class="data" id="speechiness">
-							<div class="left">
-                                <button class="data-bar left1"></button>
-							</div>
-							<div class="middle">
-								speechiness
-							</div>
-							<div class="right">
-                                <button class="data-bar right1"></button>
-							</div>
-						</div>
-
-						<div class="data" id="duration">
-							<div class="left">
-                                <button class="data-bar left1"></button>
-							</div>
-							<div class="middle">
-								duration
-							</div>
-							<div class="right">
-                                <button class="data-bar right1"></button>
-							</div>
-						</div>
-
-						<div class="data" id="energy">
-							<div class="left">
-                                <button class="data-bar left1"></button>
-							</div>
-							<div class="middle">
-								energy
-							</div>
-							<div class="right">
-                                <button class="data-bar right1"></button>
-							</div>
-						</div>
-
-						<div class="data" id="loudness">
-							<div class="left">
-                                <button class="data-bar left1"></button>
-							</div>
-							<div class="middle">
-								loudness
-							</div>
-							<div class="right">
-                                <button class="data-bar right1"></button>
-							</div>
-						</div>
-
-						<div class="data" id="acousticness">
-							<div class="left">
-                                <button class="data-bar left1"></button>
-							</div>
-							<div class="middle">
-								acousticness
-							</div>
-							<div class="right">
-                                <button class="data-bar right1"></button>
-							</div>
-						</div>
-
-						<div class="data" id="valence">
-							<div class="left">
-                                <button class="data-bar left1"></button>
-							</div>
-							<div class="middle">
-								valence
-							</div>
-							<div class="right">
-                                <button class="data-bar right1"></button>
-							</div>
-						</div>
-
-						<div class="data" id="tempo">
-							<div class="left">
-                                <button class="data-bar left1"></button>
-							</div>
-							<div class="middle">
-								tempo
-							</div>
-							<div class="right">
-                                <button class="data-bar right1"></button>
-							</div>
+						<div class="right">
+							<span class="column-label" id="right-label"></span>
 						</div>
 					</div>
-
-					<div class="webplayer-container" id="right-webplayer">
-							<iframe class="webplayer" src="" allow="encrypted-media"></iframe>
+					<div class="data" id="popularity">
+						<div class="left">
+							<button class="data-bar left1"></button>
+						</div>
+						<div class="middle">
+							popularity
+						</div>
+						<div class="right">
+							<button class="data-bar right1"></button>
+						</div>
 					</div>
-
-        </div>
-    </div>
-
-</body>
+					<div class="data" id="danceability">
+						<div class="left">
+							<button class="data-bar left1"></button>
+						</div>
+						<div class="middle">
+							danceability
+						</div>
+						<div class="right">
+							<button class="data-bar right1"></button>
+						</div>
+					</div>
+					<div class="data" id="speechiness">
+						<div class="left">
+							<button class="data-bar left1"></button>
+						</div>
+						<div class="middle">
+							speechiness
+						</div>
+						<div class="right">
+							<button class="data-bar right1"></button>
+						</div>
+					</div>
+					<div class="data" id="duration">
+						<div class="left">
+							<button class="data-bar left1"></button>
+						</div>
+						<div class="middle">
+							duration
+						</div>
+						<div class="right">
+							<button class="data-bar right1"></button>
+						</div>
+					</div>
+					<div class="data" id="energy">
+						<div class="left">
+							<button class="data-bar left1"></button>
+						</div>
+						<div class="middle">
+							energy
+						</div>
+						<div class="right">
+							<button class="data-bar right1"></button>
+						</div>
+					</div>
+					<div class="data" id="loudness">
+						<div class="left">
+							<button class="data-bar left1"></button>
+						</div>
+						<div class="middle">
+							loudness
+						</div>
+						<div class="right">
+							<button class="data-bar right1"></button>
+						</div>
+					</div>
+					<div class="data" id="acousticness">
+						<div class="left">
+							<button class="data-bar left1"></button>
+						</div>
+						<div class="middle">
+							acousticness
+						</div>
+						<div class="right">
+							<button class="data-bar right1"></button>
+						</div>
+					</div>
+					<div class="data" id="valence">
+						<div class="left">
+							<button class="data-bar left1"></button>
+						</div>
+						<div class="middle">
+							valence
+						</div>
+						<div class="right">
+							<button class="data-bar right1"></button>
+						</div>
+					</div>
+					<div class="data" id="tempo">
+						<div class="left">
+							<button class="data-bar left1"></button>
+						</div>
+						<div class="middle">
+							tempo
+						</div>
+						<div class="right">
+							<button class="data-bar right1"></button>
+						</div>
+					</div>
+				</div>
+				<div class="webplayer-container" id="right-webplayer">
+					<iframe class="webplayer" src="" allow="encrypted-media"></iframe>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

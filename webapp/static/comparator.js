@@ -1,6 +1,8 @@
 //Ann Beimers and Matthew Smith-Erb
 
 window.onload = initialize;
+var suggestions1 = [];
+var suggestions2 = [];
 
 function initialize() {
     var selection = document.getElementById("options");
@@ -57,7 +59,7 @@ function assignYearSearch(){
 
     var year1input = document.getElementById("option1_input");
     var year2input = document.getElementById("option2_input");
-    document.getElementById("go").addEventListener("click", function(){query("year", year1input, year2input)})
+    document.getElementById("go").onclick = function(){query("year", year1input, year2input)};
 }
 
 //Hides the year datalist
@@ -69,14 +71,21 @@ function hideYearSearch(){
 //creates autocomplete for artists
 function assignArtistSearch(){
     hideYearSearch();
+    //don't double add the event
+    document.getElementById("option1_input").removeEventListener("input", autoComplete);
+    document.getElementById("option2_input").removeEventListener("input", autoComplete);
     document.getElementById("option1_input").addEventListener("input", autoComplete);
     document.getElementById("option2_input").addEventListener("input", autoComplete);
+
+    var artist1_input = document.getElementById("option1_input");
+    var artist2_input = document.getElementById("option2_input");
+    document.getElementById("go").onclick = function(){query("artist", artist1_input, artist2_input)}
 }
 
 //generates the autocoplete html
 function autoComplete(){
-    //want to repopulate just these buttons
     var buttonContainer = this.parentElement.lastElementChild;
+    //create the buttons if they don't exist
     if (buttonContainer.children.length == 0){
         var buttonBody = "";
         for(var i = 0; i < 5; i ++){
@@ -84,28 +93,41 @@ function autoComplete(){
         }
         buttonContainer.innerHTML = buttonBody;
     }
+
     var searchButtons = buttonContainer.children;
+    //make the buttons blank if there is nothing in the input
     if(this.value == ""){
         for(var i = 0; i < searchButtons.length; i++){
             searchButtons[i].innerHTML="&nbsp";
+            searchButtons[i].value = "";
+            searchButtons[i].onclick = null;
         }
     }else{
-        generateSuggestions(this.value, searchButtons, this);
+        if(this.id == "option1_input"){
+            generateSuggestions(this.value, searchButtons, this, suggestions1);
+        }else if(this.id == "option2_input"){
+            generateSuggestions(this.value, searchButtons, this, suggestions2);
+        }
+
     }
 }
 
 //generates the suggestions for autocomplete
-function generateSuggestions(search, buttons, inputObj){
+function generateSuggestions(search, buttons, inputObj, suggestionList){
     var url = getAPIBaseURL() + "/search/artist/" + search;
     fetch(url, {method: 'get'})
     .then(function (response) {
         return response.json();
     }).then(function (data) {
         for(var i = 0; i < data.length; i++){
+            suggestionList[i] = {
+                artistName: data[i].artist_name,
+                artistId: data[i].id
+            };
             buttons[i].innerHTML = data[i].artist_name;
             buttons[i].onclick = function(){
                 inputObj.value = this.innerHTML;
-                //hides these suggestions
+                //hides the suggestions this button is a part of
                 this.parentElement.innerHTML = "";
             }
         }
@@ -115,13 +137,38 @@ function generateSuggestions(search, buttons, inputObj){
     });
 }
 
+function validateArtist(inputObj){
+    var artistName = inputObj.value;
+    var suggestions = [];
+    if(inputObj.id == "option1_input"){
+        suggestions = suggestions1;
+    }else if(inputObj.id == "option2_input"){
+        suggestions = suggestions2;
+    }else{
+        throw "incorrect input object"
+    }
+
+    //check if artistName is one of the possible options
+    var artistExists = false;
+    var artistId = 0;
+    for(var i = 0; i < suggestions.length; i++){
+        if (artistName == suggestions[i].artistName){
+            return suggestions[i]
+        }
+    }
+
+    alert(artistName + " is not a valid artist");
+    throw "invalid artist";
+}
+
 //INCOMPLETE
 function assignSongSearch(){
     hideYearSearch();
 }
 
-
 function hideSearchButtons(){
+    document.getElementById("option1_input").removeEventListener("input", autoComplete);
+    document.getElementById("option2_input").removeEventListener("input", autoComplete);
     document.getElementById("top-options1").innerHTML = "";
     document.getElementById("top-options2").innerHTML = "";
 }
@@ -135,9 +182,20 @@ function query(queryType, input1obj, input2obj){
     if(queryType == "year"){
         var input1 = input1obj.value;
         var input2 = input2obj.value;
+        document.getElementById("left-label").innerHTML = input1;
+        document.getElementById("right-label").innerHTML = input2;
+    }else if(queryType == "artist"){
+        var artist1 = validateArtist(input1obj);
+        var artist2 = validateArtist(input2obj);
+        var input1 = artist1.artistId;
+        var input2 = artist2.artistId;
+        document.getElementById("left-label").innerHTML = artist1.artistName;
+        document.getElementById("right-label").innerHTML = artist2.artistName;
+        hideSearchButtons();
+        document.getElementById("option1_input").addEventListener("input", autoComplete);
+        document.getElementById("option2_input").addEventListener("input", autoComplete);
     }
-    document.getElementById("left-label").innerHTML = input1;
-    document.getElementById("right-label").innerHTML = input2;
+
     var allAttributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
 
     //Assign the button actions and get the extreme songs
@@ -156,8 +214,6 @@ function query(queryType, input1obj, input2obj){
     }).then(function (data) {
         songs1 = data[0]
         songs2 = data[1]
-        console.log(songs1);
-        console.log(songs2);
         for(var i = 0; i < allAttributes.length; i ++){
             var leftBar = document.getElementById(allAttributes[i]).firstElementChild.firstElementChild;
             var rightBar = document.getElementById(allAttributes[i]).lastElementChild.firstElementChild;
@@ -188,7 +244,6 @@ function query(queryType, input1obj, input2obj){
         attributes2 = data[1]
 
         for(var i = 0; i < allAttributes.length; i ++){
-            console.log("doing stuff");
             var leftBar = document.getElementById(allAttributes[i]).firstElementChild.firstElementChild;
             var rightBar = document.getElementById(allAttributes[i]).lastElementChild.firstElementChild;
             var value1 = attributes1[allAttributes[i]];

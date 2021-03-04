@@ -17,6 +17,8 @@ function onOptionChange(){
 
     var option1 = document.getElementById("option1_input");
     var option2 = document.getElementById("option2_input");
+    option1.value = "";
+    option2.value = "";
     var option1label = document.getElementById("option1_label");
     var option2label = document.getElementById("option2_label");
 
@@ -58,29 +60,66 @@ function assignYearSearch(){
     document.getElementById("go").addEventListener("click", function(){query("year", year1input, year2input)})
 }
 
+//Hides the year datalist
 function hideYearSearch(){
     document.getElementById("year1").innerHTML = "";
     document.getElementById("year2").innerHTML = "";
 }
 
+//creates autocomplete for artists
 function assignArtistSearch(){
     hideYearSearch();
-    populateSearchButtons();
+    document.getElementById("option1_input").addEventListener("input", autoComplete);
+    document.getElementById("option2_input").addEventListener("input", autoComplete);
 }
 
+//generates the autocoplete html
+function autoComplete(){
+    //want to repopulate just these buttons
+    var buttonContainer = this.parentElement.lastElementChild;
+    if (buttonContainer.children.length == 0){
+        var buttonBody = "";
+        for(var i = 0; i < 5; i ++){
+            buttonBody += "<button>&nbsp</button>\n";
+        }
+        buttonContainer.innerHTML = buttonBody;
+    }
+    var searchButtons = buttonContainer.children;
+    if(this.value == ""){
+        for(var i = 0; i < searchButtons.length; i++){
+            searchButtons[i].innerHTML="&nbsp";
+        }
+    }else{
+        generateSuggestions(this.value, searchButtons, this);
+    }
+}
+
+//generates the suggestions for autocomplete
+function generateSuggestions(search, buttons, inputObj){
+    var url = getAPIBaseURL() + "/search/artist/" + search;
+    fetch(url, {method: 'get'})
+    .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        for(var i = 0; i < data.length; i++){
+            buttons[i].innerHTML = data[i].artist_name;
+            buttons[i].onclick = function(){
+                inputObj.value = this.innerHTML;
+                //hides these suggestions
+                this.parentElement.innerHTML = "";
+            }
+        }
+    }).catch(function (error) {
+        // if there's an error, log it
+        console.log(error);
+    });
+}
+
+//INCOMPLETE
 function assignSongSearch(){
     hideYearSearch();
-    populateSearchButtons();
 }
 
-function populateSearchButtons(){
-    var buttonBody = "";
-    for(var i = 0; i < 5; i ++){
-        buttonBody += "<button>placeholder</button>\n";
-    }
-    document.getElementById("top-options1").innerHTML = buttonBody;
-    document.getElementById("top-options2").innerHTML = buttonBody;
-}
 
 function hideSearchButtons(){
     document.getElementById("top-options1").innerHTML = "";

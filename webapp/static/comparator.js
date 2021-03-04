@@ -5,6 +5,9 @@ window.onload = initialize;
 function initialize() {
     var selection = document.getElementById("options");
     selection.addEventListener("change", onOptionChange);
+
+    //set the defualts too
+    onOptionChange();
 }
 
 //Changed the text for the input areas according to what they are searching
@@ -30,11 +33,16 @@ function onOptionChange(){
 
     if (choice == "year"){
         assignYearSearch();
+    }else if(choice == "artist"){
+        assignArtistSearch();
+    }else if(choice == "song"){
+        assignSongSearch();
     }
 }
 
 //Generate year list and add it
 function assignYearSearch(){
+    hideSearchButtons();
     var datalistBody = "";
     for (var y = 1924; y <= 2021; y++){
         datalistBody += "<option>" + y + "</option>\n";
@@ -50,8 +58,33 @@ function assignYearSearch(){
     document.getElementById("go").addEventListener("click", function(){query("year", year1input, year2input)})
 }
 
+function hideYearSearch(){
+    document.getElementById("year1").innerHTML = "";
+    document.getElementById("year2").innerHTML = "";
+}
+
 function assignArtistSearch(){
-    
+    hideYearSearch();
+    populateSearchButtons();
+}
+
+function assignSongSearch(){
+    hideYearSearch();
+    populateSearchButtons();
+}
+
+function populateSearchButtons(){
+    var buttonBody = "";
+    for(var i = 0; i < 5; i ++){
+        buttonBody += "<button>placeholder</button>\n";
+    }
+    document.getElementById("top-options1").innerHTML = buttonBody;
+    document.getElementById("top-options2").innerHTML = buttonBody;
+}
+
+function hideSearchButtons(){
+    document.getElementById("top-options1").innerHTML = "";
+    document.getElementById("top-options2").innerHTML = "";
 }
 
 //changes length of bars and assigns their functions

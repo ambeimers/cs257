@@ -241,6 +241,10 @@ def search_song(search_string):
 
     return json.dumps(songs)
 
+@api.route('/help')
+def get_help():
+    return flask.render_template('help.html')
+
 def get_connection(database, user, password):
     '''Establishes and returns the connection with the postgres database'''
     try:

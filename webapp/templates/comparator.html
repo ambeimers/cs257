@@ -4,6 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='comparator.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='navigation.css') }}" />
 		<script type="text/javascript" src="{{ url_for('static', filename='comparator.js') }}"></script>
 		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
 		<link rel="preconnect" href="https://fonts.gstatic.com">
@@ -16,9 +17,9 @@
 		</div>
 		<div id="navbar">
 			<button onclick="location.href='http://localhost:5000/'" id="home" class="button home">Home</button>
-			<button onclick="location.href='http://localhost:5000/comparator.html'" id="comparator-nav" class="button comparator-nav">Comparator</button>
-			<button id="new-music-nav" class="button new-music-nav">Find New Music</button>
-			<button id="lookup-nav" class="button lookup-nav">Artist/Year Lookup</button>
+			<button onclick="location.href='http://localhost:5000/comparator.html'" id="comparator-nav" class="button">Comparator</button>
+			<button onclick="location.href='http://localhost:5000/newmusic.html'" id="new-music-nav" class="button">Find New Music</button>
+			<button onclick="location.href='http://localhost:5000/lookup.html'" id="lookup-nav" class="button">Artist/Year Lookup</button>
 		</div>
 		<div id="content">
 			<h2>Comparator</h2>

@@ -1,0 +1,33 @@
+<!-- Ann Beimers and Matthew Smith-Erb -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='webapp.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='navigation.css') }}" />
+	<script type="text/javascript" src="{{ url_for('static', filename='webapp.js') }}"></script>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+	<title>CS 257: Software Design</title>
+</head>
+
+<body>
+    <div id="title">
+        <h1>Music Mania</h1>
+    </div>
+    <div id="navbar">
+        <button onclick="location.href='http://localhost:5000/'" id="home" class="button home">Home</button>
+        <button onclick="location.href='http://localhost:5000/comparator.html'" id="comparator-nav" class="button">Comparator</button>
+				<button onclick="location.href='http://localhost:5000/newmusic.html'" id="new-music-nav" class="button">Find New Music</button>
+				<button onclick="location.href='http://localhost:5000/lookup.html'" id="lookup-nav" class="button">Artist/Year Lookup</button>
+    </div>
+
+		<div id="content">
+			<h2> Artist/Year lookup </h2>
+		</div>
+
+
+</body>
+</html>

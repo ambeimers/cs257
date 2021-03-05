@@ -7,6 +7,23 @@ body {
     background: white;
 }
 
+h2 {
+	font-weight: bold;
+	font-size: 30px;
+	letter-spacing: 3px;
+}
+
+/* Dropdown Button */
+select {
+	background-color: #DCDCDC;
+	color: Black;
+	font-size: 16px;
+	padding: 5px;
+	border: none;
+	cursor: pointer;
+	font-family: 'Montserrat', sans-serif;
+}
+
 #title {
 	background-color: black;
 	color: white;
@@ -27,45 +44,29 @@ body {
 	padding-top: 10px;
 }
 
-h2 {
-	font-weight: bold;
-	font-size: 30px;
-	letter-spacing: 3px;
-}
-
 #search-contents {
 	display: flex;
 	justify-content: center;
 	padding-bottom: 40px;
 }
 
-
 #search-contents > div {
 	width: 20%;
     text-align: right;
-}
-
-.option-input{
-	width: 60%;
-	box-sizing: border-box;
-}
-
-
-/* Dropdown Button */
-select {
-	background-color: #DCDCDC;
-	color: Black;
-	font-size: 16px;
-	padding: 5px;
-	border: none;
-	cursor: pointer;
-	font-family: 'Montserrat', sans-serif;
 }
 
 #results-contents {
 	height: 80vh;
 	display: flex;
 	justify-content: space-evenly;
+}
+
+#attribute-contents {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	text-align: center;
+	width: 80%;
 }
 
 .webplayer-container {
@@ -83,69 +84,9 @@ select {
 	height: 60%;
 }
 
-#attribute-contents {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-	text-align: center;
-	width: 80%;
-}
-
-.button {
-	background-color: #4CAF50; /* Green */
- 	border: none;
- 	color: white;
-	padding: 8px 16px;
- 	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	transition-duration: 0.4s;
-	cursor: pointer;
-}
-
-.home {
-	background-color: white;
-	color: black;
-	border: 2px solid #4CAF50;
-}
-
-.home:hover {
-	background-color: #4CAF50;
-	color: white;
-}
-
-.comparator-nav {
-	background-color: white;
-	color: black;
-	border: 2px solid #4CAF50;
-}
-
-.comparator-nav:hover {
-	background-color: #4CAF50;
-	color: white;
-}
-
-.new-music-nav {
-	background-color: white;
-	color: black;
-	border: 2px solid #4CAF50;
-}
-
-.new-music-nav:hover {
-	background-color: #4CAF50;
-	color: white;
-}
-
-.lookup-nav {
-	background-color: white;
-	color: black;
-	border: 2px solid #4CAF50;
-}
-
-.lookup-nav:hover {
-	background-color: #4CAF50;
-	color: white;
+.option-input{
+	width: 60%;
+	box-sizing: border-box;
 }
 
 .data {
@@ -207,6 +148,9 @@ select {
 }
 
 .top-options > button{
+	background-color: white;
+	border-style: solid;
+	padding: 3px;
 	width: 60%;
 	text-align: left;
 }

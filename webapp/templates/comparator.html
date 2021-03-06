@@ -3,8 +3,8 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='comparator.css') }}" />
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='navigation.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='comparator.css') }}" />
 		<script type="text/javascript" src="{{ url_for('static', filename='comparator.js') }}"></script>
 		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
 		<link rel="preconnect" href="https://fonts.gstatic.com">
@@ -16,10 +16,10 @@
 			<h1>Music Mania</h1>
 		</div>
 		<div id="navbar">
-			<button onclick="location.href='http://localhost:5000/'" id="home" class="button home">Home</button>
-			<button onclick="location.href='http://localhost:5000/comparator.html'" id="comparator-nav" class="button">Comparator</button>
-			<button onclick="location.href='http://localhost:5000/newmusic.html'" id="new-music-nav" class="button">Find New Music</button>
-			<button onclick="location.href='http://localhost:5000/lookup.html'" id="lookup-nav" class="button">Artist/Year Lookup</button>
+			<button onclick="location.href='http://localhost:5000/'" id="home" class="nav-button">Home</button>
+			<button onclick="location.href='http://localhost:5000/comparator.html'" id="comparator-nav" class="nav-button">Comparator</button>
+			<button onclick="location.href='http://localhost:5000/newmusic.html'" id="new-music-nav" class="nav-button">Find New Music</button>
+			<button onclick="location.href='http://localhost:5000/lookup.html'" id="lookup-nav" class="nav-button">Artist/Year Lookup</button>
 		</div>
 		<div id="content">
 			<h2>Comparator</h2>
@@ -49,7 +49,7 @@
 					</div>
 				</div>
 			</div>
-			<button id="go" class="button button-go">Go!</button>
+			<button id="go" class="nav-button">Go!</button>
 			<h2>RESULTS</h2>
 			<div id="results-contents">
 				<div class="webplayer-container" id="left-webplayer">

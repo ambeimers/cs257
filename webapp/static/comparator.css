@@ -125,17 +125,6 @@ select {
 	color: white;
 }
 
-.button-go {
-	background-color: white;
-	color: black;
-	border: 2px solid #4CAF50;
-}
-
-.button-go:hover {
-	background-color: #4CAF50;
-	color: white;
-}
-
 .column-label{
 	font-weight: bold;
 }
@@ -149,6 +138,7 @@ select {
 
 .top-options > button{
 	background-color: white;
+	color: black;
 	border-style: solid;
 	padding: 3px;
 	width: 60%;

@@ -4,9 +4,9 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='webapp.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lookup.css') }}" />
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='navigation.css') }}" />
-	<script type="text/javascript" src="{{ url_for('static', filename='webapp.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='lookup.js') }}"></script>
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
@@ -27,6 +27,145 @@
 		<div id="content">
 			<h2> Artist/Year lookup </h2>
 		</div>
+		<div id="search-contents">
+			<div>
+				<label for="options">What do you want to look up?</label>
+				<select name="options" id="options">
+					<option value="artist">Artist</option>
+					<option value="year">Year</option>
+				</select>
+			</div>
+			<div>
+				<label for="options" id="option_label">Option</label>
+				<input class="option-input" id="option_input" type="text" list="year"/>
+				<datalist id="year">
+				</datalist>
+				<div id="top-options" class="top-options">
+				</div>
+			</div>
+	</div>
+	<button id="go" class="nav-button">Go!</button>
+	<h2>RESULTS</h2>
+	<div id="results-contents">
+		<div class="webplayer-container" id="left-webplayer">
+			<iframe class="webplayer" src="" allow="encrypted-media"></iframe>
+		</div>
+		<div id="attribute-contents">
+			<div class="data">
+				<div class="left">
+					<span class="column-label" id="left-label">Least</span>
+				</div>
+				<div class="middle">
+				</div>
+				<div class="right">
+					<span class="column-label" id="right-label">Most</span>
+				</div>
+			</div>
+			<div class="data" id="popularity">
+				<div class="left">
+					<button class="data-bar left1"></button>
+				</div>
+				<div class="middle">
+					popularity
+				</div>
+				<div class="right">
+					<button class="data-bar right1"></button>
+				</div>
+			</div>
+			<div class="data" id="danceability">
+				<div class="left">
+					<button class="data-bar left1"></button>
+				</div>
+				<div class="middle">
+					danceability
+				</div>
+				<div class="right">
+					<button class="data-bar right1"></button>
+				</div>
+			</div>
+			<div class="data" id="speechiness">
+				<div class="left">
+					<button class="data-bar left1"></button>
+				</div>
+				<div class="middle">
+					speechiness
+				</div>
+				<div class="right">
+					<button class="data-bar right1"></button>
+				</div>
+			</div>
+			<div class="data" id="duration">
+				<div class="left">
+					<button class="data-bar left1"></button>
+				</div>
+				<div class="middle">
+					duration
+				</div>
+				<div class="right">
+					<button class="data-bar right1"></button>
+				</div>
+			</div>
+			<div class="data" id="energy">
+				<div class="left">
+					<button class="data-bar left1"></button>
+				</div>
+				<div class="middle">
+					energy
+				</div>
+				<div class="right">
+					<button class="data-bar right1"></button>
+				</div>
+			</div>
+			<div class="data" id="loudness">
+				<div class="left">
+					<button class="data-bar left1"></button>
+				</div>
+				<div class="middle">
+					loudness
+				</div>
+				<div class="right">
+					<button class="data-bar right1"></button>
+				</div>
+			</div>
+			<div class="data" id="acousticness">
+				<div class="left">
+					<button class="data-bar left1"></button>
+				</div>
+				<div class="middle">
+					acousticness
+				</div>
+				<div class="right">
+					<button class="data-bar right1"></button>
+				</div>
+			</div>
+			<div class="data" id="valence">
+				<div class="left">
+					<button class="data-bar left1"></button>
+				</div>
+				<div class="middle">
+					valence
+				</div>
+				<div class="right">
+					<button class="data-bar right1"></button>
+				</div>
+			</div>
+			<div class="data" id="tempo">
+				<div class="left">
+					<button class="data-bar left1"></button>
+				</div>
+				<div class="middle">
+					tempo
+				</div>
+				<div class="right">
+					<button class="data-bar right1"></button>
+				</div>
+			</div>
+		</div>
+		<div class="webplayer-container" id="right-webplayer">
+			<iframe class="webplayer" src="" allow="encrypted-media"></iframe>
+		</div>
+	</div>
+
 
 
 </body>

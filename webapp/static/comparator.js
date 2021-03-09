@@ -199,8 +199,8 @@ function query(queryType, input1obj, input2obj){
     var allAttributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
 
     //Assign the button actions and get the extreme songs
-    var url1 = getAPIBaseURL() + '/songs/' + queryType + '/' + input1;
-    var url2 = getAPIBaseURL() + '/songs/' + queryType + '/' + input2;
+    var url1 = getAPIBaseURL() + '/most/songs/' + queryType + '/' + input1;
+    var url2 = getAPIBaseURL() + '/most/songs/' + queryType + '/' + input2;
     var songs1 = {};
     var songs2 = {};
     Promise.all([

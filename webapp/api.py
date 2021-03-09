@@ -156,7 +156,7 @@ def get_song_year_attribute(year, attribute_name):
 
     return json.dumps(song_dict)
 
-@api.route('/songs/year/<year>')
+@api.route('/most/songs/year/<year>')
 def get_songs_year_attributes(year):
     parameter = (str(year),) * 9
     query = '''

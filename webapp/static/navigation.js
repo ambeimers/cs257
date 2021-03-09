@@ -1,3 +1,5 @@
+//Ann Beimers and Matthew Smith-Erb
+
 window.onload = initialize;
 
 function initialize(){

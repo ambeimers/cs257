@@ -1,12 +1,5 @@
 /* Ann Beimers and Matthew Smith-Erb */
 
-body {
-	margin: 0px;
-	text-align: center;
-    font-family: 'Montserrat', sans-serif;
-    background: white;
-}
-
 h2 {
 	font-weight: bold;
 	font-size: 30px;
@@ -22,26 +15,6 @@ select {
 	border: none;
 	cursor: pointer;
 	font-family: 'Montserrat', sans-serif;
-}
-
-#title {
-	background-color: black;
-	color: white;
-	margin: 0px;
-	text-align: center;
-	letter-spacing: 7px;
-	word-spacing: 10px;
-	padding-bottom: 1px;
-	padding-top: 1px;
-	font-size: 20px;
-}
-
-#navbar{
-  background-color: black;
-	margin: 0px;
-	text-align: center;
-	padding-bottom: 10px;
-	padding-top: 10px;
 }
 
 #search-contents {

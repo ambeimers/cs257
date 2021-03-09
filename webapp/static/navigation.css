@@ -28,4 +28,11 @@ button {
 .nav-button:hover {
     background-color: #4CAF50;
 	color: white;
+    cursor: pointer;
+}
+
+.nav-button:disabled {
+    background-color: #4CAF50;
+	color: white;
+    cursor: default;
 }

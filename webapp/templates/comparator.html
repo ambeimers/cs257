@@ -6,6 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='navigation.css') }}" />
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='comparator.css') }}" />
 		<script type="text/javascript" src="{{ url_for('static', filename='comparator.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='navigation.js') }}"></script>
 		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
 		<link rel="preconnect" href="https://fonts.gstatic.com">
 		<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
@@ -16,10 +17,10 @@
 			<h1>Music Mania</h1>
 		</div>
 		<div id="navbar">
-			<button onclick="location.href='http://localhost:5000/'" id="home" class="nav-button">Home</button>
-			<button onclick="location.href='http://localhost:5000/comparator.html'" id="comparator-nav" class="nav-button">Comparator</button>
-			<button onclick="location.href='http://localhost:5000/newmusic.html'" id="new-music-nav" class="nav-button">Find New Music</button>
-			<button onclick="location.href='http://localhost:5000/lookup.html'" id="lookup-nav" class="nav-button">Artist/Year Lookup</button>
+			<button id="index-nav" class="nav-button">Home</button>
+			<button id="comparator-nav" class="nav-button">Comparator</button>
+			<button id="newmusic-nav" class="nav-button">Find New Music</button>
+			<button id="lookup-nav" class="nav-button">Artist/Year Lookup</button>
 		</div>
 		<div id="content">
 			<h2>Comparator</h2>

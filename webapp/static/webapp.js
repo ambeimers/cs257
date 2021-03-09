@@ -1,8 +1,8 @@
 //Ann Beimers and Matthew Smith-Erb
 
-window.onload = initialize;
+window.addEventListener("load", initializeNavigation);
 
-function initialize() {
+function initializeNavigation() {
     var element = document.getElementById('search');
     if (element) {
         element.onclick = onSearchButton;

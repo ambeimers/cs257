@@ -1,10 +1,10 @@
 //Ann Beimers and Matthew Smith-Erb
 
-window.onload = initialize;
+window.addEventListener("load", initializeComparator);
 var suggestions1 = [];
 var suggestions2 = [];
 
-function initialize() {
+function initializeComparator() {
     var selection = document.getElementById("options");
     selection.addEventListener("change", onOptionChange);
 

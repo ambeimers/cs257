@@ -1,6 +1,6 @@
 //Ann Beimers and Matthew Smith-Erb
 
-window.onload = initialize;
+window.addEventListener("load", initialize);
 
 function initialize(){
     //assign paths

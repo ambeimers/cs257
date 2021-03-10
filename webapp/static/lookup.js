@@ -1,8 +1,8 @@
 //Ann Beimers and Matthew Smith-searchButtons
+window.addEventListener("load", lookupInitialize);
+suggestions = [];
 
-window.onload = initialize;
-
-function initialize() {
+function lookupInitialize() {
     var selection = document.getElementById("options");
     selection.addEventListener("change", onOptionChange);
 
@@ -27,12 +27,14 @@ function onOptionChange(){
         option.placeholder = "enter a year"
     }
 
+    var goButton = document.getElementById("go");
     if (choice == "year"){
         assignYearSearch();
+        go.onclick = function(){query("year", option)};
     }else if(choice == "artist"){
         assignArtistSearch();
-		}
-
+        go.onclick = function(){query("artist", option)};
+	}
 }
 
 //Generate year list and add it
@@ -68,12 +70,6 @@ function assignArtistSearch(){
 
 function validateArtist(inputObj){
     var artistName = inputObj.value;
-    var suggestions = [];
-    if(inputObj.id == "option_input"){
-        suggestions = suggestions1;
-    }else{
-        throw "incorrect input object"
-    }
 
     //check if artistName is one of the possible options
     var artistExists = false;
@@ -164,7 +160,7 @@ function query(queryType, inputobj){
 
     //Assign the button actions and get the extreme songs
     var url1 = getAPIBaseURL() + '/most/songs/' + queryType + '/' + input;
-		var url2 = getAPIBaseURL() + '/least/songs/' + queryType + '/' + input;
+	var url2 = getAPIBaseURL() + '/least/songs/' + queryType + '/' + input;
     var leastSongs = {};
 		var mostSongs = {};
     Promise.all([
@@ -193,8 +189,8 @@ function query(queryType, inputobj){
     });
 
     //Assign correct length of buttons
-		url1 = getAPIBaseURL() + '/most/songs/' + queryType + '/' + input;
-		url2 = getAPIBaseURL() + '/least/songs/' + queryType + '/' + input;
+	url1 = getAPIBaseURL() + '/most/songs/' + queryType + '/' + input;
+	url2 = getAPIBaseURL() + '/least/songs/' + queryType + '/' + input;
     Promise.all([
         fetch(url1, {method: 'get'}),
         fetch(url2, {method: 'get'})
@@ -209,8 +205,8 @@ function query(queryType, inputobj){
         for(var i = 0; i < allAttributes.length; i ++){
             var leftBar = document.getElementById(allAttributes[i]).firstElementChild.firstElementChild;
             var rightBar = document.getElementById(allAttributes[i]).lastElementChild.firstElementChild;
-            var value1 = attributes1[allAttributes[i]];
-            var value2 = attributes2[allAttributes[i]];
+            var value1 = attributes1[allAttributes[i]].value;
+            var value2 = attributes2[allAttributes[i]].value;
             var maxValue = Math.max(value1, value2) * Math.max(value1, value2);
             leftBar.style.width = ((value1 * value1 / maxValue) * 100) + "%";
             rightBar.style.width = ((value2 * value2 / maxValue) * 100) + "%";

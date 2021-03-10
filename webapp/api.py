@@ -68,7 +68,7 @@ def get_artist(artist_id):
 def get_song(song_id):
     parameter = (str(song_id),)
     query = '''
-    SELECT song_name, acousticness, danceability, duration, energy, loudness, speechiness, tempo, valence, popularity, year
+    SELECT song_name, acousticness, danceability, duration, energy, loudness, speechiness, tempo, valence, popularity, year, spotify_id
     FROM songs
     WHERE
     id = %s
@@ -87,7 +87,7 @@ def get_song(song_id):
     song_dict["valence"] = song_data[0][8]
     song_dict["popularity"] = int(song_data[0][9])
     song_dict["year"] = int(song_data[0][10])
-
+    song_dict["spotify_id"] = song_data[0][11]
     return json.dumps(song_dict)
 
 @api.route('/song/artist/<artist_id>/<attribute_name>')

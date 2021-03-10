@@ -1,9 +1,14 @@
 //Ann Beimers and Matthew Smith-Erb
 
 window.addEventListener("load", initializeComparator);
+
+//persistent arrays needed for autoComplete suggestions
 var suggestions1 = [];
 var suggestions2 = [];
 
+var allAttributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
+
+//itinialize the page
 function initializeComparator() {
     var selection = document.getElementById("options");
     selection.addEventListener("change", onOptionChange);
@@ -27,6 +32,7 @@ function onOptionChange(){
     option1label.innerHTML = choice + " 1"
     option2label.innerHTML = choice + " 2"
 
+    //a vs an correctly
     if (choice == "artist"){
         option1.placeholder = "enter an artist"
         option2.placeholder = "enter an artist"
@@ -72,19 +78,36 @@ function hideYearSearch(){
 function assignArtistSearch(){
     hideYearSearch();
     //don't double add the event
-    document.getElementById("option1_input").removeEventListener("input", autoComplete);
-    document.getElementById("option2_input").removeEventListener("input", autoComplete);
-    document.getElementById("option1_input").addEventListener("input", autoComplete);
-    document.getElementById("option2_input").addEventListener("input", autoComplete);
+    document.getElementById("option1_input").oninput = function(){};
+    document.getElementById("option2_input").oninput = function(){};
+    document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "artist")};
+    document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "artist")};
 
     var artist1_input = document.getElementById("option1_input");
     var artist2_input = document.getElementById("option2_input");
     document.getElementById("go").onclick = function(){query("artist", artist1_input, artist2_input)}
 }
 
-//generates the autocoplete html
-function autoComplete(){
-    var buttonContainer = this.parentElement.lastElementChild;
+//INCOMPLETE
+function assignSongSearch(){
+    hideYearSearch();
+    //don't double add the event
+    document.getElementById("option1_input").oninput = function(){};
+    document.getElementById("option2_input").oninput = function(){};
+    document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "song")};
+    document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "song")};
+
+    var song1_input = document.getElementById("option1_input");
+    var song2_input = document.getElementById("option2_input");
+    document.getElementById("go").onclick = function(){query("song", song1_input, song2_input)}
+}
+
+//generates the autocoplete html - called when there is input in a field
+function autoComplete(inputObj, searchType){
+    if (searchType != "song" && searchType != "artist"){
+        throw "searchType must be a song an artist";
+    }
+    var buttonContainer = inputObj.parentElement.lastElementChild;
     //create the buttons if they don't exist
     if (buttonContainer.children.length == 0){
         var buttonBody = "";
@@ -96,35 +119,47 @@ function autoComplete(){
 
     var searchButtons = buttonContainer.children;
     //make the buttons blank if there is nothing in the input
-    if(this.value == ""){
+    if(inputObj.value == ""){
         for(var i = 0; i < searchButtons.length; i++){
             searchButtons[i].innerHTML="&nbsp";
             searchButtons[i].value = "";
             searchButtons[i].onclick = null;
         }
     }else{
-        if(this.id == "option1_input"){
-            generateSuggestions(this.value, searchButtons, this, suggestions1);
-        }else if(this.id == "option2_input"){
-            generateSuggestions(this.value, searchButtons, this, suggestions2);
+        if(inputObj.id == "option1_input"){
+            generateSuggestions(inputObj.value, searchButtons, inputObj, suggestions1, searchType);
+        }else if(inputObj.id == "option2_input"){
+            generateSuggestions(inputObj.value, searchButtons, inputObj, suggestions2, searchType);
         }
 
     }
 }
 
 //generates the suggestions for autocomplete
-function generateSuggestions(search, buttons, inputObj, suggestionList){
-    var url = getAPIBaseURL() + "/search/artist/" + search;
+function generateSuggestions(search, buttons, inputObj, suggestionList, searchType){
+    if (searchType != "song" && searchType != "artist"){
+        throw "searchType must be a song an artist";
+    }
+
+    var url = getAPIBaseURL() + "/search/" + searchType +"/" + search;
     fetch(url, {method: 'get'})
     .then(function (response) {
         return response.json();
     }).then(function (data) {
         for(var i = 0; i < data.length; i++){
+            if(searchType == "artist"){
+                var suggestionName = data[i].artist_name;
+                buttons[i].innerHTML = suggestionName;
+            }else if(searchType == "song"){
+                var suggestionName = data[i].song_name;
+                //TODO: add the year afterwards and make sure the validation still works
+                buttons[i].innerHTML = suggestionName;
+            }
             suggestionList[i] = {
-                artistName: data[i].artist_name,
-                artistId: data[i].id
+                name: suggestionName,
+                id: data[i].id
             };
-            buttons[i].innerHTML = data[i].artist_name;
+
             buttons[i].onclick = function(){
                 inputObj.value = this.innerHTML;
                 //hides the suggestions this button is a part of
@@ -137,7 +172,8 @@ function generateSuggestions(search, buttons, inputObj, suggestionList){
     });
 }
 
-function validateArtist(inputObj){
+//ensure that the user wrote input which matches a given suggestion
+function validateInput(inputObj){
     var artistName = inputObj.value;
     var suggestions = [];
     if(inputObj.id == "option1_input"){
@@ -152,7 +188,7 @@ function validateArtist(inputObj){
     var artistExists = false;
     var artistId = 0;
     for(var i = 0; i < suggestions.length; i++){
-        if (artistName == suggestions[i].artistName){
+        if (artistName == suggestions[i].name){
             return suggestions[i]
         }
     }
@@ -161,104 +197,167 @@ function validateArtist(inputObj){
     throw "invalid artist";
 }
 
-//INCOMPLETE
-function assignSongSearch(){
-    hideYearSearch();
-}
-
+//hide the suggetion buttons
 function hideSearchButtons(){
-    document.getElementById("option1_input").removeEventListener("input", autoComplete);
-    document.getElementById("option2_input").removeEventListener("input", autoComplete);
+    document.getElementById("option1_input").oninput = function(){};
+    document.getElementById("option2_input").oninput = function(){};
     document.getElementById("top-options1").innerHTML = "";
     document.getElementById("top-options2").innerHTML = "";
 }
 
 //changes length of bars and assigns their functions
 function query(queryType, input1obj, input2obj){
-    if (queryType != "year" && queryType != "artist"){
+    if (queryType != "year" && queryType != "artist" && queryType != "song"){
         throw "queryType must be 'songs' or 'artists'";
     }
 
+    //parse correct info and assign labels
     if(queryType == "year"){
         var input1 = input1obj.value;
         var input2 = input2obj.value;
         document.getElementById("left-label").innerHTML = input1;
         document.getElementById("right-label").innerHTML = input2;
     }else if(queryType == "artist"){
-        var artist1 = validateArtist(input1obj);
-        var artist2 = validateArtist(input2obj);
-        var input1 = artist1.artistId;
-        var input2 = artist2.artistId;
-        document.getElementById("left-label").innerHTML = artist1.artistName;
-        document.getElementById("right-label").innerHTML = artist2.artistName;
+        var artist1 = validateInput(input1obj);
+        var artist2 = validateInput(input2obj);
+        var input1 = artist1.id;
+        var input2 = artist2.id;
+        document.getElementById("left-label").innerHTML = artist1.name;
+        document.getElementById("right-label").innerHTML = artist2.name;
         hideSearchButtons();
-        document.getElementById("option1_input").addEventListener("input", autoComplete);
-        document.getElementById("option2_input").addEventListener("input", autoComplete);
+        document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "artist")};
+        document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "artist")};
+    }else if(queryType == "song"){
+        var song1 = validateInput(input1obj);
+        var song2 = validateInput(input2obj);
+        var input1 = song1.id;
+        var input2 = song2.id;
+        document.getElementById("left-label").innerHTML = song1.name;
+        document.getElementById("right-label").innerHTML = song2.name;
+        hideSearchButtons();
+        document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "song")};
+        document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "song")};
     }
 
-    var allAttributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
+    //reset webplayers to be empty
+    document.getElementById("left-webplayer").firstElementChild.src = "";
+    document.getElementById("right-webplayer").firstElementChild.src = "";
 
-    //Assign the button actions and get the extreme songs
-    var url1 = getAPIBaseURL() + '/most/songs/' + queryType + '/' + input1;
-    var url2 = getAPIBaseURL() + '/most/songs/' + queryType + '/' + input2;
-    var songs1 = {};
-    var songs2 = {};
-    Promise.all([
-        fetch(url1, {method: 'get'}),
-        fetch(url2, {method: 'get'})
-    ]).then(function (responses) {
-    	// Get a JSON object from each of the responses
-    	return Promise.all(responses.map(function (response) {
-    		return response.json();
-    	}));
-    }).then(function (data) {
-        songs1 = data[0]
-        songs2 = data[1]
-        for(var i = 0; i < allAttributes.length; i ++){
-            var leftBar = document.getElementById(allAttributes[i]).firstElementChild.firstElementChild;
-            var rightBar = document.getElementById(allAttributes[i]).lastElementChild.firstElementChild;
-            let leftSong = songs1[allAttributes[i]];
-            let rightSong = songs2[allAttributes[i]];
-            leftBar.addEventListener("click", function(){onBarClick(leftSong, true)});
-            rightBar.addEventListener("click", function(){onBarClick(rightSong, false)});
-        }
 
-    }).catch(function (error) {
-    	// if there's an error, log it
-    	console.log(error);
-    });
 
-    //Assign correct length of buttons
-    url1 = getAPIBaseURL() + '/' + queryType + '/' + input1;
-    url2 = getAPIBaseURL() + '/' + queryType + '/' + input2;
-    Promise.all([
-        fetch(url1, {method: 'get'}),
-        fetch(url2, {method: 'get'})
-    ]).then(function (responses) {
-    	// Get a JSON object from each of the responses
-    	return Promise.all(responses.map(function (response) {
-    		return response.json();
-    	}));
-    }).then(function (data) {
-        attributes1 = data[0]
-        attributes2 = data[1]
-
-        for(var i = 0; i < allAttributes.length; i ++){
-            var leftBar = document.getElementById(allAttributes[i]).firstElementChild.firstElementChild;
-            var rightBar = document.getElementById(allAttributes[i]).lastElementChild.firstElementChild;
-            var value1 = attributes1[allAttributes[i]];
-            var value2 = attributes2[allAttributes[i]];
-            var maxValue = Math.max(value1, value2) * Math.max(value1, value2);
-            leftBar.style.width = ((value1 * value1 / maxValue) * 100) + "%";
-            rightBar.style.width = ((value2 * value2 / maxValue) * 100) + "%";
-        }
-    }).catch(function (error) {
-    	// if there's an error, log it
-    	console.log(error);
-    });
+    assignDataBars(input1, input2, queryType);
+    assignBarWidths(input1, input2, queryType);
 
 }
 
+//Assign the button actions of the databars
+function assignDataBars(input1, input2, queryType){
+    if(queryType == "song"){
+        for(var i = 0; i < allAttributes.length; i ++){
+            var leftBar = document.getElementById(allAttributes[i]).firstElementChild.firstElementChild;
+            var rightBar = document.getElementById(allAttributes[i]).lastElementChild.firstElementChild;
+            leftBar.onclick = function(){};
+            rightBar.onclick = function(){};
+        }
+    }else{
+        var url1 = getAPIBaseURL() + '/most/songs/' + queryType + '/' + input1;
+        var url2 = getAPIBaseURL() + '/most/songs/' + queryType + '/' + input2;
+        var songs1 = {};
+        var songs2 = {};
+        Promise.all([
+            fetch(url1, {method: 'get'}),
+            fetch(url2, {method: 'get'})
+        ]).then(function (responses) {
+            // Get a JSON object from each of the responses
+            return Promise.all(responses.map(function (response) {
+                return response.json();
+            }));
+        }).then(function (data) {
+            songs1 = data[0]
+            songs2 = data[1]
+            for(var i = 0; i < allAttributes.length; i ++){
+                var leftBar = document.getElementById(allAttributes[i]).firstElementChild.firstElementChild;
+                var rightBar = document.getElementById(allAttributes[i]).lastElementChild.firstElementChild;
+                let leftSong = songs1[allAttributes[i]];
+                let rightSong = songs2[allAttributes[i]];
+                leftBar.onclick = function(){onBarClick(leftSong, true)};
+                rightBar.onclick = function(){onBarClick(rightSong, false)};
+            }
+        }).catch(function (error) {
+            // if there's an error, log it
+            console.log(error);
+        });
+    }
+}
+
+//Assign correct length of buttons according to the respective song
+function assignBarWidths(input1, input2, queryType){
+    if(queryType == "song"){
+        var url1 = getAPIBaseURL() + '/song/' + input1;
+        var url2 = getAPIBaseURL() + '/song/' + input2;
+        Promise.all([
+            fetch(url1, {method: 'get'}),
+            fetch(url2, {method: 'get'})
+        ]).then(function (responses) {
+            // Get a JSON object from each of the responses
+            return Promise.all(responses.map(function (response) {
+                return response.json();
+            }));
+        }).then(function (data) {
+            song1 = data[0]
+            song2 = data[1]
+
+            //assign webplayers here
+            document.getElementById("left-webplayer").firstElementChild.src = "https://open.spotify.com/embed/track/" + song1.spotify_id;
+            document.getElementById("right-webplayer").firstElementChild.src = "https://open.spotify.com/embed/track/" + song2.spotify_id;
+
+            //now assign button widths
+            for(var i = 0; i < allAttributes.length; i ++){
+                var leftBar = document.getElementById(allAttributes[i]).firstElementChild.firstElementChild;
+                var rightBar = document.getElementById(allAttributes[i]).lastElementChild.firstElementChild;
+                var value1 = song1[allAttributes[i]];
+                var value2 = song2[allAttributes[i]];
+                var maxValue = Math.max(value1, value2) * Math.max(value1, value2);
+                leftBar.style.width = ((value1 * value1 / maxValue) * 100) + "%";
+                rightBar.style.width = ((value2 * value2 / maxValue) * 100) + "%";
+            }
+        }).catch(function (error) {
+            // if there's an error, log it
+            console.log(error);
+        });
+    }else{
+        var url1 = getAPIBaseURL() + '/' + queryType + '/' + input1;
+        var url2 = getAPIBaseURL() + '/' + queryType + '/' + input2;
+        Promise.all([
+            fetch(url1, {method: 'get'}),
+            fetch(url2, {method: 'get'})
+        ]).then(function (responses) {
+        	// Get a JSON object from each of the responses
+        	return Promise.all(responses.map(function (response) {
+        		return response.json();
+        	}));
+        }).then(function (data) {
+            var attributes1 = data[0]
+            var attributes2 = data[1]
+
+            for(var i = 0; i < allAttributes.length; i ++){
+                var leftBar = document.getElementById(allAttributes[i]).firstElementChild.firstElementChild;
+                var rightBar = document.getElementById(allAttributes[i]).lastElementChild.firstElementChild;
+                var value1 = attributes1[allAttributes[i]];
+                var value2 = attributes2[allAttributes[i]];
+                var maxValue = Math.max(value1, value2) * Math.max(value1, value2);
+                leftBar.style.width = ((value1 * value1 / maxValue) * 100) + "%";
+                rightBar.style.width = ((value2 * value2 / maxValue) * 100) + "%";
+            }
+        }).catch(function (error) {
+        	// if there's an error, log it
+        	console.log(error);
+        });
+    }
+
+}
+
+//event for what happens when databar is clicked
 function onBarClick(songInfo, onLeft){
     var webplayer;
     if(onLeft){

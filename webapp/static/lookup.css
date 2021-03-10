@@ -42,6 +42,10 @@ select {
 	width: 80%;
 }
 
+#go-div {
+	width: 10% !important;
+}
+
 .webplayer-container {
 	width: 30%;
 	height: 100%;

@@ -147,6 +147,9 @@ function query(queryType, inputobj){
         throw "queryType must be 'years' or 'artists'";
     }
 
+		document.getElementById("results").style.visibility = "visible";
+    document.getElementById("results-contents").style.visibility = "visible";
+
     if(queryType == "year"){
         var input = inputobj.value;
     }else if(queryType == "artist"){

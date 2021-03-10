@@ -24,6 +24,7 @@ select {
 
 #search-contents > div {
 	width: 20%;
+	text-align: right;
 }
 
 #results-contents {
@@ -38,6 +39,10 @@ select {
 	justify-content: space-evenly;
 	text-align: center;
 	width: 80%;
+}
+
+#go-div {
+	width: 10% !important;
 }
 
 .webplayer-container {

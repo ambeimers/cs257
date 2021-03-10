@@ -151,7 +151,7 @@ function generateSuggestions(search, buttons, inputObj, suggestionList, searchTy
                 var suggestionName = data[i].artist_name;
                 buttons[i].innerHTML = suggestionName;
             }else if(searchType == "song"){
-                var suggestionName = data[i].song_name;
+                var suggestionName = data[i].song_name + " (" + data[i].year + ")";
                 //TODO: add the year afterwards and make sure the validation still works
                 buttons[i].innerHTML = suggestionName;
             }
@@ -160,10 +160,19 @@ function generateSuggestions(search, buttons, inputObj, suggestionList, searchTy
                 id: data[i].id
             };
 
-            buttons[i].onclick = function(){
-                inputObj.value = this.innerHTML;
-                //hides the suggestions this button is a part of
-                this.parentElement.innerHTML = "";
+            //assign the correct assignment function, take off last 7 characters (the year) if song searching
+            if(searchType == "song"){
+                buttons[i].onclick = function(){
+                    inputObj.value = this.innerHTML.substring(0, this.innerHTML.length - 7);
+                    //hides the suggestions this button is a part of
+                    this.parentElement.innerHTML = "";
+                }
+            }else{
+                buttons[i].onclick = function(){
+                    inputObj.value = this.innerHTML;
+                    //hides the suggestions this button is a part of
+                    this.parentElement.innerHTML = "";
+                }
             }
         }
     }).catch(function (error) {
@@ -173,8 +182,11 @@ function generateSuggestions(search, buttons, inputObj, suggestionList, searchTy
 }
 
 //ensure that the user wrote input which matches a given suggestion
-function validateInput(inputObj){
-    var artistName = inputObj.value;
+function validateInput(inputObj, inputType){
+    if(inputType != "song" && inputType != "artist"){
+        throw "inputType must be 'song' or 'artist'";
+    }
+    var name = inputObj.value;
     var suggestions = [];
     if(inputObj.id == "option1_input"){
         suggestions = suggestions1;
@@ -188,13 +200,27 @@ function validateInput(inputObj){
     var artistExists = false;
     var artistId = 0;
     for(var i = 0; i < suggestions.length; i++){
-        if (artistName == suggestions[i].name){
-            return suggestions[i]
+        if(inputType == "artist"){
+            if (name == suggestions[i].name){
+                return suggestions[i];
+            }
+        }else if(inputType == "song"){
+            //get rid of last 7 characters of suggestion to ignore the year at end
+            if (name == suggestions[i].name.substring(0, suggestions[i].name.length - 7)){
+                return suggestions[i];
+            }
         }
+
     }
 
-    alert(artistName + " is not a valid artist");
-    throw "invalid artist";
+    if(inputType == "artist"){
+        alert(name + " is not a valid artist");
+        throw "invalid artist";
+    }else if(inputType == "song"){
+        alert(name + " is not a valid song");
+        throw "invalid song";
+    }
+
 }
 
 //hide the suggetion buttons
@@ -220,8 +246,8 @@ function query(queryType, input1obj, input2obj){
         document.getElementById("left-label").innerHTML = input1;
         document.getElementById("right-label").innerHTML = input2;
     }else if(queryType == "artist"){
-        var artist1 = validateInput(input1obj);
-        var artist2 = validateInput(input2obj);
+        var artist1 = validateInput(input1obj, "artist");
+        var artist2 = validateInput(input2obj, "artist");
         var input1 = artist1.id;
         var input2 = artist2.id;
         document.getElementById("left-label").innerHTML = artist1.name;
@@ -230,12 +256,12 @@ function query(queryType, input1obj, input2obj){
         document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "artist")};
         document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "artist")};
     }else if(queryType == "song"){
-        var song1 = validateInput(input1obj);
-        var song2 = validateInput(input2obj);
+        var song1 = validateInput(input1obj, "song");
+        var song2 = validateInput(input2obj, "song");
         var input1 = song1.id;
         var input2 = song2.id;
-        document.getElementById("left-label").innerHTML = song1.name;
-        document.getElementById("right-label").innerHTML = song2.name;
+        document.getElementById("left-label").innerHTML = song1.name.substring(0, song1.length - 7);
+        document.getElementById("right-label").innerHTML = song2.name.substring(0, song2.length - 7);
         hideSearchButtons();
         document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "song")};
         document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "song")};

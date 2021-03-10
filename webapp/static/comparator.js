@@ -211,6 +211,8 @@ function query(queryType, input1obj, input2obj){
         throw "queryType must be 'songs' or 'artists'";
     }
 
+    document.getElementById("results").style.visibility = "visible";
+    document.getElementById("results-contents").style.visibility = "visible";
     //parse correct info and assign labels
     if(queryType == "year"){
         var input1 = input1obj.value;

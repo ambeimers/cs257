@@ -239,6 +239,8 @@ function query(queryType, input1obj, input2obj){
 
     document.getElementById("results").style.visibility = "visible";
     document.getElementById("results-contents").style.visibility = "visible";
+    document.getElementById("left-webplayer").lastElementChild.removeAttribute("hidden");
+    document.getElementById("right-webplayer").lastElementChild.removeAttribute("hidden");
     //parse correct info and assign labels
     if(queryType == "year"){
         var input1 = input1obj.value;
@@ -265,9 +267,13 @@ function query(queryType, input1obj, input2obj){
         hideSearchButtons();
         document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "song")};
         document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "song")};
+        document.getElementById("left-webplayer").lastElementChild.setAttribute("hidden", true);
+        document.getElementById("right-webplayer").lastElementChild.setAttribute("hidden", true);
     }
 
     //reset webplayers to be empty
+    document.getElementById("left-webplayer").firstElementChild.setAttribute("hidden", true);
+    document.getElementById("right-webplayer").firstElementChild.setAttribute("hidden", true);
     document.getElementById("left-webplayer").firstElementChild.src = "";
     document.getElementById("right-webplayer").firstElementChild.src = "";
 
@@ -336,6 +342,8 @@ function assignBarWidths(input1, input2, queryType){
             song2 = data[1]
 
             //assign webplayers here
+            document.getElementById("left-webplayer").firstElementChild.removeAttribute("hidden")
+            document.getElementById("right-webplayer").firstElementChild.removeAttribute("hidden")
             document.getElementById("left-webplayer").firstElementChild.src = "https://open.spotify.com/embed/track/" + song1.spotify_id;
             document.getElementById("right-webplayer").firstElementChild.src = "https://open.spotify.com/embed/track/" + song2.spotify_id;
 
@@ -393,6 +401,7 @@ function onBarClick(songInfo, onLeft){
     }else{
         webplayer = document.getElementById("right-webplayer").firstElementChild;
     }
+    webplayer.removeAttribute("hidden");
     webplayer.src = "https://open.spotify.com/embed/track/" + songInfo.spotify_id;
 
 }

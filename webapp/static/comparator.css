@@ -53,6 +53,11 @@ select {
 	border-top-left-radius: 15px;
 }
 
+.webplayer-instruction{
+	padding: 15px;
+	text-align: left;
+}
+
 .webplayer{
 	border-radius: 15px;
 	border-width: 0px;

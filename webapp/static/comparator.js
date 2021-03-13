@@ -29,13 +29,13 @@ function onOptionChange(){
     var option2 = document.getElementById("option2_input");
     option1.value = "";
     option2.value = "";
+
     var option1label = document.getElementById("option1_label");
     var option2label = document.getElementById("option2_label");
-
     option1label.innerHTML = choice + " 1"
     option2label.innerHTML = choice + " 2"
 
-    //a vs an correctly
+    //a vs an english correctly
     if (choice == "artist"){
         option1.placeholder = "enter an artist"
         option2.placeholder = "enter an artist"
@@ -80,9 +80,7 @@ function hideYearSearch(){
 //creates autocomplete for artists
 function assignArtistSearch(){
     hideYearSearch();
-    //don't double add the event
-    document.getElementById("option1_input").oninput = function(){};
-    document.getElementById("option2_input").oninput = function(){};
+    //add the autoComplete for artists
     document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "artist")};
     document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "artist")};
 
@@ -91,18 +89,16 @@ function assignArtistSearch(){
     document.getElementById("go").onclick = function(){query("artist", artist1input, artist2input)}
 }
 
-//INCOMPLETE
+//creates autcomplete for songs
 function assignSongSearch(){
     hideYearSearch();
-    //don't double add the event
-    document.getElementById("option1_input").oninput = function(){};
-    document.getElementById("option2_input").oninput = function(){};
+    //add the autoComplete for songs
     document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "song")};
     document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "song")};
 
-    var song1_input = document.getElementById("option1_input");
-    var song2_input = document.getElementById("option2_input");
-    document.getElementById("go").onclick = function(){query("song", song1_input, song2_input)}
+    var song1input = document.getElementById("option1_input");
+    var song2input = document.getElementById("option2_input");
+    document.getElementById("go").onclick = function(){query("song", song1input, song2input)}
 }
 
 //generates the autocoplete html - called when there is input in a field
@@ -134,7 +130,6 @@ function autoComplete(inputObj, searchType){
         }else if(inputObj.id == "option2_input"){
             generateSuggestions(inputObj.value, searchButtons, inputObj, suggestions2, searchType);
         }
-
     }
 }
 
@@ -259,23 +254,27 @@ function query(queryType, input1obj, input2obj){
         throw "queryType must be 'songs' or 'artists'";
     }
 
+    //fill in instructions according to the query
     var instructionPlaceholders = document.getElementsByClassName("instruction-type");
     instructionPlaceholders[0].innerHTML = queryType;
     instructionPlaceholders[1].innerHTML = queryType;
+
     //parse correct info and assign labels
     try{
+        var leftLabel = document.getElementById("left-label");
+        var rightLabel = document.getElementById("right-label");
         if(queryType == "year"){
             var input1 = validateYear(input1obj.value);
             var input2 = validateYear(input2obj.value);
-            document.getElementById("left-label").innerHTML = input1;
-            document.getElementById("right-label").innerHTML = input2;
+            leftLabel.innerHTML = input1;
+            rightLabel.innerHTML = input2;
         }else if(queryType == "artist"){
             var artist1 = validateInput(input1obj, "artist");
             var artist2 = validateInput(input2obj, "artist");
             var input1 = artist1.id;
             var input2 = artist2.id;
-            document.getElementById("left-label").innerHTML = artist1.name;
-            document.getElementById("right-label").innerHTML = artist2.name;
+            leftLabel.innerHTML = artist1.name;
+            rightLabel.innerHTML = artist2.name;
             hideSearchButtons();
             document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "artist")};
             document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "artist")};
@@ -284,8 +283,8 @@ function query(queryType, input1obj, input2obj){
             var song2 = validateInput(input2obj, "song");
             var input1 = song1.id;
             var input2 = song2.id;
-            document.getElementById("left-label").innerHTML = song1.name.substring(0, song1.name.length - 7);
-            document.getElementById("right-label").innerHTML = song2.name.substring(0, song2.name.length - 7);
+            leftLabel.innerHTML = song1.name.substring(0, song1.name.length - 7);
+            rightLabel.innerHTML = song2.name.substring(0, song2.name.length - 7);
             hideSearchButtons();
             document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "song")};
             document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "song")};
@@ -295,26 +294,31 @@ function query(queryType, input1obj, input2obj){
         console.log(error);
         return;
     }
+
+    //make results section visible
     document.getElementById("results").style.visibility = "visible";
     document.getElementById("results-contents").style.visibility = "visible";
+
+    var leftInstructions = document.getElementById("left-webplayer").lastElementChild;
+    var rightInstructions = document.getElementById("right-webplayer").lastElementChild;
     if(queryType == "song"){
-        document.getElementById("left-webplayer").lastElementChild.setAttribute("hidden", true);
-        document.getElementById("right-webplayer").lastElementChild.setAttribute("hidden", true);
+        leftInstructions.setAttribute("hidden", true);
+        rightInstructions.setAttribute("hidden", true);
     }else{
-        document.getElementById("left-webplayer").lastElementChild.removeAttribute("hidden");
-        document.getElementById("right-webplayer").lastElementChild.removeAttribute("hidden");
+        leftInstructions.removeAttribute("hidden");
+        rightInstructions.removeAttribute("hidden");
     }
 
-
     //reset webplayers to be empty
-    document.getElementById("left-webplayer").firstElementChild.setAttribute("hidden", true);
-    document.getElementById("right-webplayer").firstElementChild.setAttribute("hidden", true);
-    document.getElementById("left-webplayer").firstElementChild.src = "";
-    document.getElementById("right-webplayer").firstElementChild.src = "";
+    var leftWebplayer = document.getElementById("left-webplayer").firstElementChild;
+    var rightWebplayer = document.getElementById("right-webplayer").firstElementChild;
+    leftWebplayer.setAttribute("hidden", true);
+    rightWebplayer.setAttribute("hidden", true);
+    leftWebplayer.src = "";
+    rightWebplayer.src = "";
 
     assignDataBars(input1, input2, queryType);
     assignBarWidths(input1, input2, queryType);
-
 }
 
 //Assign the button actions of the databars
@@ -436,7 +440,6 @@ function onBarClick(songInfo, onLeft){
     }
     webplayer.removeAttribute("hidden");
     webplayer.src = "https://open.spotify.com/embed/track/" + songInfo.spotify_id;
-
 }
 
 //return the url of the api we have

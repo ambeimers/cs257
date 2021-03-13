@@ -6,6 +6,9 @@ window.addEventListener("load", initializeComparator);
 var suggestions1 = [];
 var suggestions2 = [];
 
+const minYear = 1924;
+const maxYear = 2021;
+
 var allAttributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
 
 //itinialize the page
@@ -54,7 +57,7 @@ function onOptionChange(){
 function assignYearSearch(){
     hideSearchButtons();
     var datalistBody = "";
-    for (var y = 1924; y <= 2021; y++){
+    for (var y = minYear; y <= maxYear; y++){
         datalistBody += "<option>" + y + "</option>\n";
     }
     var year1Datalist = document.getElementById("year1");
@@ -223,6 +226,26 @@ function validateInput(inputObj, inputType){
 
 }
 
+//ensure the string in the year input is a valid year
+function validateYear(input){
+    if (typeof input != "string"){
+        throw "input must be a string"
+    }
+
+    if(!isNaN(input)){
+        var year = parseInt(input, 10);
+        if(year < minYear || year > maxYear){
+            alert(year + " is out of range " + minYear +" - " + maxYear);
+            throw year + " is out of range " + minYear +" - " + maxYear;
+        }else{
+            return year;
+        }
+    }
+
+    alert("You must input a valid year");
+    throw "input must be a year";
+}
+
 //hide the suggetion buttons
 function hideSearchButtons(){
     document.getElementById("option1_input").oninput = function(){};
@@ -237,50 +260,59 @@ function query(queryType, input1obj, input2obj){
         throw "queryType must be 'songs' or 'artists'";
     }
 
-    document.getElementById("results").style.visibility = "visible";
-    document.getElementById("results-contents").style.visibility = "visible";
-    document.getElementById("left-webplayer").lastElementChild.removeAttribute("hidden");
-    document.getElementById("right-webplayer").lastElementChild.removeAttribute("hidden");
     var instructionPlaceholders = document.getElementsByClassName("instruction-type");
     instructionPlaceholders[0].innerHTML = queryType;
     instructionPlaceholders[1].innerHTML = queryType;
     //parse correct info and assign labels
-    if(queryType == "year"){
-        var input1 = input1obj.value;
-        var input2 = input2obj.value;
-        document.getElementById("left-label").innerHTML = input1;
-        document.getElementById("right-label").innerHTML = input2;
-    }else if(queryType == "artist"){
-        var artist1 = validateInput(input1obj, "artist");
-        var artist2 = validateInput(input2obj, "artist");
-        var input1 = artist1.id;
-        var input2 = artist2.id;
-        document.getElementById("left-label").innerHTML = artist1.name;
-        document.getElementById("right-label").innerHTML = artist2.name;
-        hideSearchButtons();
-        document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "artist")};
-        document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "artist")};
-    }else if(queryType == "song"){
-        var song1 = validateInput(input1obj, "song");
-        var song2 = validateInput(input2obj, "song");
-        var input1 = song1.id;
-        var input2 = song2.id;
-        document.getElementById("left-label").innerHTML = song1.name.substring(0, song1.length - 7);
-        document.getElementById("right-label").innerHTML = song2.name.substring(0, song2.length - 7);
-        hideSearchButtons();
-        document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "song")};
-        document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "song")};
+    try{
+        if(queryType == "year"){
+            var input1 = validateYear(input1obj.value);
+            var input2 = validateYear(input2obj.value);
+            document.getElementById("left-label").innerHTML = input1;
+            document.getElementById("right-label").innerHTML = input2;
+        }else if(queryType == "artist"){
+            var artist1 = validateInput(input1obj, "artist");
+            var artist2 = validateInput(input2obj, "artist");
+            var input1 = artist1.id;
+            var input2 = artist2.id;
+            document.getElementById("left-label").innerHTML = artist1.name;
+            document.getElementById("right-label").innerHTML = artist2.name;
+            hideSearchButtons();
+            document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "artist")};
+            document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "artist")};
+        }else if(queryType == "song"){
+            var song1 = validateInput(input1obj, "song");
+            var song2 = validateInput(input2obj, "song");
+            var input1 = song1.id;
+            var input2 = song2.id;
+            document.getElementById("left-label").innerHTML = song1.name.substring(0, song1.length - 7);
+            document.getElementById("right-label").innerHTML = song2.name.substring(0, song2.length - 7);
+            hideSearchButtons();
+            document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "song")};
+            document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "song")};
+        }
+    }catch(error){
+        //catch the validation error being thrown
+        console.log(error);
+        return;
+    }
+
+    if(queryType == "song"){
         document.getElementById("left-webplayer").lastElementChild.setAttribute("hidden", true);
         document.getElementById("right-webplayer").lastElementChild.setAttribute("hidden", true);
+    }else{
+        document.getElementById("results").style.visibility = "visible";
+        document.getElementById("results-contents").style.visibility = "visible";
+        document.getElementById("left-webplayer").lastElementChild.removeAttribute("hidden");
+        document.getElementById("right-webplayer").lastElementChild.removeAttribute("hidden");
     }
+
 
     //reset webplayers to be empty
     document.getElementById("left-webplayer").firstElementChild.setAttribute("hidden", true);
     document.getElementById("right-webplayer").firstElementChild.setAttribute("hidden", true);
     document.getElementById("left-webplayer").firstElementChild.src = "";
     document.getElementById("right-webplayer").firstElementChild.src = "";
-
-
 
     assignDataBars(input1, input2, queryType);
     assignBarWidths(input1, input2, queryType);
@@ -409,6 +441,7 @@ function onBarClick(songInfo, onLeft){
 
 }
 
+//return the url of the api we have
 function getAPIBaseURL() {
     var baseURL = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/api';
     return baseURL;

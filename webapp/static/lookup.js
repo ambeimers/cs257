@@ -209,11 +209,10 @@ function query(queryType, inputobj){
         for(var i = 0; i < allAttributes.length; i ++){
             var leftBar = document.getElementById(allAttributes[i]).firstElementChild.firstElementChild;
             var rightBar = document.getElementById(allAttributes[i]).lastElementChild.firstElementChild;
-            var value1 = attributes1[allAttributes[i]].value;
-            var value2 = attributes2[allAttributes[i]].value;
-            var maxValue = Math.max(value1, value2) * Math.max(value1, value2);
-            leftBar.style.width = ((value1 * value1 / maxValue) * 100) + "%";
-            rightBar.style.width = ((value2 * value2 / maxValue) * 100) + "%";
+            var title1 = attributes1[allAttributes[i]].song_name;
+            var title2 = attributes2[allAttributes[i]].song_name;
+            leftBar.innerText = title1;
+            rightBar.innerText = title2;
         }
     }).catch(function (error) {
     	// if there's an error, log it

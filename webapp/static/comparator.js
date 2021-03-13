@@ -297,6 +297,7 @@ function query(queryType, input1obj, input2obj){
 
     //make results section visible
     document.getElementById("results").style.visibility = "visible";
+    document.getElementById("description").style.visibility = "visible";
     document.getElementById("results-contents").style.visibility = "visible";
 
     var leftInstructions = document.getElementById("left-webplayer").lastElementChild;
@@ -418,9 +419,28 @@ function assignBarWidths(input1, input2, queryType){
                 var rightBar = document.getElementById(allAttributes[i]).lastElementChild.firstElementChild;
                 var value1 = attributes1[allAttributes[i]];
                 var value2 = attributes2[allAttributes[i]];
-                var maxValue = Math.max(value1, value2) * Math.max(value1, value2);
-                leftBar.style.width = ((value1 * value1 / maxValue) * 100) + "%";
-                rightBar.style.width = ((value2 * value2 / maxValue) * 100) + "%";
+                if (allAttributes[i] == "popularity" || allAttributes[i] == "tempo" || allAttributes[i] == "loudness" || allAttributes[i] == "duration" ){
+                    var maxValue = Math.max(value1, value2);
+                    if(allAttributes[i] == "loudness"){
+                        leftBar.style.width = maxValue /value1 * 100 + "%";
+                        rightBar.style.width = maxValue /value2 * 100 + "%";
+                    }else{
+                        leftBar.style.width = value1 /maxValue * 100 + "%";
+                        rightBar.style.width = value2 /maxValue * 100 + "%";
+                    }
+
+                }else{
+                    leftBar.style.width = value1 * 100 + "%";
+                    rightBar.style.width = value2 * 100 + "%";
+                }
+
+                if (value1 > value2){
+                    rightBar.classList.add("orange");
+                    leftBar.classList.remove("orange");
+                }else{
+                    leftBar.classList.add("orange");
+                    rightBar.classList.remove("orange");
+                }
             }
         }).catch(function (error) {
         	// if there's an error, log it

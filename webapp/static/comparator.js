@@ -155,7 +155,6 @@ function generateSuggestions(search, buttons, inputObj, suggestionList, searchTy
                 buttons[i].innerHTML = suggestionName;
             }else if(searchType == "song"){
                 var suggestionName = data[i].song_name + " (" + data[i].year + ")";
-                //TODO: add the year afterwards and make sure the validation still works
                 buttons[i].innerHTML = suggestionName;
             }
             suggestionList[i] = {
@@ -166,13 +165,13 @@ function generateSuggestions(search, buttons, inputObj, suggestionList, searchTy
             //assign the correct assignment function, take off last 7 characters (the year) if song searching
             if(searchType == "song"){
                 buttons[i].onclick = function(){
-                    inputObj.value = this.innerHTML.substring(0, this.innerHTML.length - 7);
+                    inputObj.value = this.innerText.substring(0, this.innerText.length - 7);
                     //hides the suggestions this button is a part of
                     this.parentElement.innerHTML = "";
                 }
             }else{
                 buttons[i].onclick = function(){
-                    inputObj.value = this.innerHTML;
+                    inputObj.value = this.innerText;
                     //hides the suggestions this button is a part of
                     this.parentElement.innerHTML = "";
                 }
@@ -296,13 +295,12 @@ function query(queryType, input1obj, input2obj){
         console.log(error);
         return;
     }
-
+    document.getElementById("results").style.visibility = "visible";
+    document.getElementById("results-contents").style.visibility = "visible";
     if(queryType == "song"){
         document.getElementById("left-webplayer").lastElementChild.setAttribute("hidden", true);
         document.getElementById("right-webplayer").lastElementChild.setAttribute("hidden", true);
     }else{
-        document.getElementById("results").style.visibility = "visible";
-        document.getElementById("results-contents").style.visibility = "visible";
         document.getElementById("left-webplayer").lastElementChild.removeAttribute("hidden");
         document.getElementById("right-webplayer").lastElementChild.removeAttribute("hidden");
     }

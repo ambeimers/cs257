@@ -83,9 +83,9 @@ function assignArtistSearch(){
     document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "artist")};
     document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "artist")};
 
-    var artist1_input = document.getElementById("option1_input");
-    var artist2_input = document.getElementById("option2_input");
-    document.getElementById("go").onclick = function(){query("artist", artist1_input, artist2_input)}
+    var artist1input = document.getElementById("option1_input");
+    var artist2input = document.getElementById("option2_input");
+    document.getElementById("go").onclick = function(){query("artist", artist1input, artist2input)}
 }
 
 //INCOMPLETE
@@ -241,6 +241,9 @@ function query(queryType, input1obj, input2obj){
     document.getElementById("results-contents").style.visibility = "visible";
     document.getElementById("left-webplayer").lastElementChild.removeAttribute("hidden");
     document.getElementById("right-webplayer").lastElementChild.removeAttribute("hidden");
+    var instructionPlaceholders = document.getElementsByClassName("instruction-type");
+    instructionPlaceholders[0].innerHTML = queryType;
+    instructionPlaceholders[1].innerHTML = queryType;
     //parse correct info and assign labels
     if(queryType == "year"){
         var input1 = input1obj.value;

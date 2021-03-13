@@ -284,8 +284,8 @@ function query(queryType, input1obj, input2obj){
             var song2 = validateInput(input2obj, "song");
             var input1 = song1.id;
             var input2 = song2.id;
-            document.getElementById("left-label").innerHTML = song1.name.substring(0, song1.length - 7);
-            document.getElementById("right-label").innerHTML = song2.name.substring(0, song2.length - 7);
+            document.getElementById("left-label").innerHTML = song1.name.substring(0, song1.name.length - 7);
+            document.getElementById("right-label").innerHTML = song2.name.substring(0, song2.name.length - 7);
             hideSearchButtons();
             document.getElementById("option1_input").oninput = function(){autoComplete(document.getElementById("option1_input"), "song")};
             document.getElementById("option2_input").oninput = function(){autoComplete(document.getElementById("option2_input"), "song")};

@@ -27,6 +27,10 @@ select {
 	text-align: right;
 }
 
+#results{
+	margin: 0px;
+}
+
 #results-contents {
 	height: 80vh;
 	display: flex;
@@ -67,7 +71,12 @@ select {
 
 .option-input{
 	width: 60%;
+	padding: 5px;
+	font-family: 'Montserrat', sans-serif;
 	box-sizing: border-box;
+	border-radius: 6px;
+	border-style: solid;
+	border-color: #4CAF50;
 }
 
 .data {
@@ -118,9 +127,12 @@ select {
 }
 
 .top-options > button{
+	font-family: 'Montserrat', sans-serif;
 	background-color: white;
 	color: black;
+	border-width: 1px;
 	border-style: solid;
+	border-top: none;
 	padding: 3px;
 	width: 60%;
 	text-align: left;

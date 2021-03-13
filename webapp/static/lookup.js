@@ -68,6 +68,7 @@ function assignArtistSearch(){
     document.getElementById("go").onclick = function(){query("artist", artist_input)}
 }
 
+//ensure artist input is correct
 function validateArtist(inputObj){
     var artistName = inputObj.value;
 
@@ -130,7 +131,7 @@ function generateSuggestions(search, buttons, inputObj, suggestionList){
             };
             buttons[i].innerHTML = data[i].artist_name;
             buttons[i].onclick = function(){
-                inputObj.value = this.innerHTML;
+                inputObj.value = this.innerText;
                 //hides the suggestions this button is a part of
                 this.parentElement.innerHTML = "";
             }

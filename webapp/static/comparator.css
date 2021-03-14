@@ -1,4 +1,5 @@
 /* Ann Beimers and Matthew Smith-Erb */
+
 h2 {
 	font-weight: bold;
 	font-size: 30px;
@@ -23,7 +24,7 @@ select {
 }
 
 #search-contents > div {
-	width: 20%;
+	width: 25%;
 	text-align: right;
 }
 
@@ -52,7 +53,7 @@ select {
 .webplayer-container {
 	width: 30%;
 	height: 100%;
-	background-color: #4CAF50;
+	background-color: #DCDCDC;
 	border-top-right-radius: 15px;
 	border-top-left-radius: 15px;
 }
@@ -116,10 +117,10 @@ select {
 	color: white;
 }
 .orange{
-	border-color: orange;
+	border-color: #003F91;
 }
 .orange:hover{
-	background-color:orange !important;
+	background-color:#003F91 !important;
 	color: white;
 }
 

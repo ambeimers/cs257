@@ -249,6 +249,23 @@ def get_least_songs_artist_attributes(artist_id):
 
     return json.dumps(year_dict)
 
+@api.route('/artist/<artist1_id>/<artist2_id>/<attribute>')
+def artist_suggestion(artist1_id, artist2_id, attribute):
+    parameter = (str(artist1_id), str(artist2_id), str(attribute),)
+    query = '''
+    SELECT artist.artist_name FROM (SELECT AVG(chosen.popularity) FROM (SELECT * FROM artists WHERE id = 1 or id = 3) as chosen as average, artists;)
+    '''
+    connection = get_connection(database, user, password)
+    suggestion_data = get_query(query, parameter, connection)
+    suggestions = []
+    for i in range(3):
+        artist_dict = {}
+        artist_dict["id"] = search_data[i][0]
+        artist_dict["artist_name"] = search_data[i][1]
+        artists.append(artist_dict)
+
+    return json.dumps(suggestions)
+
 @api.route('/search/artist/<search_string>')
 def search_artist(search_string):
     parameter = (str(search_string),)

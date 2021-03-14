@@ -1,1 +1,14 @@
 /* Ann Beimers and Matthew Smith-Erb */
+
+h3 {
+	color: #4CAF50;
+	font-style: italic;
+}
+
+.content {
+	font-size: 13pt;
+	text-align: center;
+	padding-left: 150px;
+	padding-right: 150px;
+	padding-bottom: 60px;
+}

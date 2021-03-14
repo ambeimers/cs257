@@ -148,7 +148,7 @@ function query(queryType, inputobj){
         throw "queryType must be 'years' or 'artists'";
     }
 
-		document.getElementById("results").style.visibility = "visible";
+	document.getElementById("results").style.visibility = "visible";
     document.getElementById("results-contents").style.visibility = "visible";
 
     if(queryType == "year"){
@@ -163,6 +163,8 @@ function query(queryType, inputobj){
     var allAttributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
 
     //Assign the button actions and get the extreme songs
+    //set cursor to loading
+    document.body.style.cursor = "progress";
     var url1 = getAPIBaseURL() + '/most/songs/' + queryType + '/' + input;
 	var url2 = getAPIBaseURL() + '/least/songs/' + queryType + '/' + input;
     var leastSongs = {};
@@ -186,13 +188,16 @@ function query(queryType, inputobj){
             leftBar.addEventListener("click", function(){onBarClick(leftSong, true)});
             rightBar.addEventListener("click", function(){onBarClick(rightSong, false)});
         }
-
+        //set cursor back
+        document.body.style.cursor = "auto";
     }).catch(function (error) {
     	// if there's an error, log it
     	console.log(error);
     });
 
     //Assign correct length of buttons
+    //set cursor to loading
+    document.body.style.cursor = "progress";
 	url1 = getAPIBaseURL() + '/most/songs/' + queryType + '/' + input;
 	url2 = getAPIBaseURL() + '/least/songs/' + queryType + '/' + input;
     Promise.all([
@@ -214,6 +219,8 @@ function query(queryType, inputobj){
             leftBar.innerText = title1;
             rightBar.innerText = title2;
         }
+        //set cursor back
+        document.body.style.cursor = "auto";
     }).catch(function (error) {
     	// if there's an error, log it
     	console.log(error);

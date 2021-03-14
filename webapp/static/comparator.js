@@ -9,7 +9,7 @@ var suggestions2 = [];
 const minYear = 1924;
 const maxYear = 2021;
 
-var allAttributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
+const allAttributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
 
 //itinialize the page
 function initializeComparator() {
@@ -324,6 +324,8 @@ function query(queryType, input1obj, input2obj){
 
 //Assign the button actions of the databars
 function assignDataBars(input1, input2, queryType){
+    //set cursor to loading circle
+    document.body.style.cursor = "progress";
     if(queryType == "song"){
         for(var i = 0; i < allAttributes.length; i ++){
             var leftBar = document.getElementById(allAttributes[i]).firstElementChild.firstElementChild;
@@ -354,6 +356,9 @@ function assignDataBars(input1, input2, queryType){
                 let rightSong = songs2[allAttributes[i]];
                 leftBar.onclick = function(){onBarClick(leftSong, true)};
                 rightBar.onclick = function(){onBarClick(rightSong, false)};
+
+                //set cursor back
+                document.body.style.cursor = "auto";
             }
         }).catch(function (error) {
             // if there's an error, log it
@@ -364,90 +369,72 @@ function assignDataBars(input1, input2, queryType){
 
 //Assign correct length of buttons according to the respective song
 function assignBarWidths(input1, input2, queryType){
-    if(queryType == "song"){
-        var url1 = getAPIBaseURL() + '/song/' + input1;
-        var url2 = getAPIBaseURL() + '/song/' + input2;
-        Promise.all([
-            fetch(url1, {method: 'get'}),
-            fetch(url2, {method: 'get'})
-        ]).then(function (responses) {
-            // Get a JSON object from each of the responses
-            return Promise.all(responses.map(function (response) {
-                return response.json();
-            }));
-        }).then(function (data) {
-            song1 = data[0]
-            song2 = data[1]
+    //set cursor to loading
+    document.body.style.cursor = "progress";
+    var url1 = getAPIBaseURL() + '/' + queryType + '/' + input1;
+    var url2 = getAPIBaseURL() + '/' + queryType + '/' + input2;
+    Promise.all([
+        fetch(url1, {method: 'get'}),
+        fetch(url2, {method: 'get'})
+    ]).then(function (responses) {
+    	// Get a JSON object from each of the responses
+    	return Promise.all(responses.map(function (response) {
+    		return response.json();
+    	}));
+    }).then(function (data) {
+        var data1 = data[0]
+        var data2 = data[1]
 
+        //assign webplayers if this is a song query
+        if(queryType == "song"){
             //assign webplayers here
             document.getElementById("left-webplayer").firstElementChild.removeAttribute("hidden")
             document.getElementById("right-webplayer").firstElementChild.removeAttribute("hidden")
-            document.getElementById("left-webplayer").firstElementChild.src = "https://open.spotify.com/embed/track/" + song1.spotify_id;
-            document.getElementById("right-webplayer").firstElementChild.src = "https://open.spotify.com/embed/track/" + song2.spotify_id;
+            document.getElementById("left-webplayer").firstElementChild.src = "https://open.spotify.com/embed/track/" + data1.spotify_id;
+            document.getElementById("right-webplayer").firstElementChild.src = "https://open.spotify.com/embed/track/" + data2.spotify_id;
+        }
+        for(var i = 0; i < allAttributes.length; i ++){
+            var leftBar = document.getElementById(allAttributes[i]).firstElementChild.firstElementChild;
+            var rightBar = document.getElementById(allAttributes[i]).lastElementChild.firstElementChild;
+            var value1 = data1[allAttributes[i]];
+            var value2 = data2[allAttributes[i]];
+            leftBar.style.width = getWidthFromValueAttribute(value1, value2, allAttributes[i]);
+            rightBar.style.width = getWidthFromValueAttribute(value2, value1, allAttributes[i]);
 
-            //now assign button widths
-            for(var i = 0; i < allAttributes.length; i ++){
-                var leftBar = document.getElementById(allAttributes[i]).firstElementChild.firstElementChild;
-                var rightBar = document.getElementById(allAttributes[i]).lastElementChild.firstElementChild;
-                var value1 = song1[allAttributes[i]];
-                var value2 = song2[allAttributes[i]];
-                var maxValue = Math.max(value1, value2) * Math.max(value1, value2);
-                leftBar.style.width = ((value1 * value1 / maxValue) * 100) + "%";
-                rightBar.style.width = ((value2 * value2 / maxValue) * 100) + "%";
-            }
-        }).catch(function (error) {
-            // if there's an error, log it
-            console.log(error);
-        });
+            colorAttributeBar(value1, value2, leftBar, rightBar);
+        }
+        //set cursor back
+        document.body.style.cursor = "auto";
+    }).catch(function (error) {
+    	// if there's an error, log it
+    	console.log(error);
+    });
+}
+
+//colors the left and right bar of an attribute depending on which value is greater
+function colorAttributeBar(value1, value2, leftBar, rightBar){
+    if (value1 > value2){
+        rightBar.classList.add("orange");
+        leftBar.classList.remove("orange");
     }else{
-        var url1 = getAPIBaseURL() + '/' + queryType + '/' + input1;
-        var url2 = getAPIBaseURL() + '/' + queryType + '/' + input2;
-        Promise.all([
-            fetch(url1, {method: 'get'}),
-            fetch(url2, {method: 'get'})
-        ]).then(function (responses) {
-        	// Get a JSON object from each of the responses
-        	return Promise.all(responses.map(function (response) {
-        		return response.json();
-        	}));
-        }).then(function (data) {
-            var attributes1 = data[0]
-            var attributes2 = data[1]
-
-            for(var i = 0; i < allAttributes.length; i ++){
-                var leftBar = document.getElementById(allAttributes[i]).firstElementChild.firstElementChild;
-                var rightBar = document.getElementById(allAttributes[i]).lastElementChild.firstElementChild;
-                var value1 = attributes1[allAttributes[i]];
-                var value2 = attributes2[allAttributes[i]];
-                if (allAttributes[i] == "popularity" || allAttributes[i] == "tempo" || allAttributes[i] == "loudness" || allAttributes[i] == "duration" ){
-                    var maxValue = Math.max(value1, value2);
-                    if(allAttributes[i] == "loudness"){
-                        leftBar.style.width = maxValue /value1 * 100 + "%";
-                        rightBar.style.width = maxValue /value2 * 100 + "%";
-                    }else{
-                        leftBar.style.width = value1 /maxValue * 100 + "%";
-                        rightBar.style.width = value2 /maxValue * 100 + "%";
-                    }
-
-                }else{
-                    leftBar.style.width = value1 * 100 + "%";
-                    rightBar.style.width = value2 * 100 + "%";
-                }
-
-                if (value1 > value2){
-                    rightBar.classList.add("orange");
-                    leftBar.classList.remove("orange");
-                }else{
-                    leftBar.classList.add("orange");
-                    rightBar.classList.remove("orange");
-                }
-            }
-        }).catch(function (error) {
-        	// if there's an error, log it
-        	console.log(error);
-        });
+        leftBar.classList.add("orange");
+        rightBar.classList.remove("orange");
     }
+}
 
+//returns the width of the bar given a value, maxValue, and attributes
+function getWidthFromValueAttribute(primaryValue, secondaryValue, attribute){
+    if (attribute == "popularity" || attribute == "tempo" || attribute == "loudness" || attribute == "duration" ){
+        var maxValue = Math.max(primaryValue, secondaryValue);
+        if(attribute == "loudness"){
+            return (maxValue /primaryValue * 100 + "%");
+        }else{
+            return (primaryValue /maxValue * 100 + "%");
+        }
+
+    }else{
+        return (primaryValue * 100 + "%");
+    }
 }
 
 //event for what happens when databar is clicked

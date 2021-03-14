@@ -6,7 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='navigation.css') }}" />
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='comparator.css') }}" />
-	<script type="text/javascript" src="{{ url_for('static', filename='webapp.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='newmusic.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='navigation.js') }}"></script>
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
 	<link rel="preconnect" href="https://fonts.gstatic.com">
@@ -15,20 +15,40 @@
 </head>
 
 <body>
-    <div id="title">
-        <h1>Music Mania</h1>
-    </div>
-    <div id="navbar">
+	<div id="title">
+		<h1>Music Mania</h1>
+	</div>
+	<div id="navbar">
 		<button id="index-nav" class="nav-button">Home</button>
 		<button id="comparator-nav" class="nav-button">Comparator</button>
 		<button id="newmusic-nav" class="nav-button">Find New Music</button>
 		<button id="lookup-nav" class="nav-button">Artist/Year Lookup</button>
-    </div>
-
-		<div id="content">
-			<h2> Find New Music </h2>
+	</div>
+	<div id="content">
+		<h2>New Music</h2>
+		<div id="search-contents">
+			<div>
+				<label for="options" id="option1_label">artist 1</label>
+				<input class="option-input" id="option1_input" type="text"/>
+				<div id="top-options1" class="top-options">
+				</div>
+			</div>
+			<div>
+				<label for="options" id="option2_label">artist 2</label>
+				<input class="option-input" id="option2_input" type="text"/>
+				<div id="top-options2" class="top-options">
+				</div>
+			</div>
+			<div id="go-div">
+				<button id="go" class="nav-button">Go!</button>
+			</div>
 		</div>
-
-
+		<h2 id="results" style="visibility: hidden">RESULTS</h2>
+		<div id="results-contents" style="visibility: hidden">
+			<iframe id="webplayer1" class="webplayer" src="" allow="encrypted-media" ></iframe>
+			<iframe id="webplayer2" class="webplayer" src="" allow="encrypted-media" ></iframe>
+			<iframe id="webplayer3" class="webplayer" src="" allow="encrypted-media" ></iframe>
+		</div>
+	</div>
 </body>
 </html>

@@ -249,20 +249,31 @@ def get_least_songs_artist_attributes(artist_id):
 
     return json.dumps(year_dict)
 
-@api.route('/artist/<artist1_id>/<artist2_id>/<attribute>')
-def artist_suggestion(artist1_id, artist2_id, attribute):
-    parameter = (str(artist1_id), str(artist2_id), str(attribute),)
-    query = '''
-    SELECT artist.artist_name FROM (SELECT AVG(chosen.popularity) FROM (SELECT * FROM artists WHERE id = 1 or id = 3) as chosen as average, artists;)
+@api.route('/artist/<artist1_id>/<artist2_id>/')
+def artist_suggestion(artist1_id, artist2_id):
+    parameter = (str(artist1_id), str(artist2_id),str(artist1_id), str(artist2_id),)
+    potential_attributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
+    #some values are divided by a number which is the maximum range for that attribute (such as tempo) since they aren't normalized
+    query = '''SELECT artists.id, artists.artist_name
+                FROM (SELECT AVG(chosen.acousticness) as acousticness, AVG(chosen.danceability) as danceability, AVG(chosen.energy) as energy,
+                AVG(chosen.loudness) as loudness, AVG(chosen.speechiness) as speechiness, AVG(chosen.tempo) as tempo,
+                AVG(chosen.valence) as valence, AVG(chosen.popularity) as popularity
+                FROM (SELECT * FROM artists WHERE id = %s or id = %s) as chosen) as average, artists
+                WHERE artists.id != %s AND artists.id != %s
+                ORDER BY ((artists.danceability - average.danceability)^2 + (artists.acousticness - average.acousticness)^2
+                + (artists.energy - average.energy)^2  + ((artists.loudness / 60) - (average.loudness / 60))^2
+                + (artists.speechiness - average.speechiness)^2  + ((artists.tempo / 220) - (average.tempo / 220))^2
+                + (artists.valence - average.valence)^2  + ((artists.popularity / 100) - (average.popularity / 100))^2)
+                ASC LIMIT 3;
     '''
     connection = get_connection(database, user, password)
     suggestion_data = get_query(query, parameter, connection)
     suggestions = []
-    for i in range(3):
+    for i in range(len(suggestion_data)):
         artist_dict = {}
-        artist_dict["id"] = search_data[i][0]
-        artist_dict["artist_name"] = search_data[i][1]
-        artists.append(artist_dict)
+        artist_dict["id"] = suggestion_data[i][0]
+        artist_dict["artist_name"] = suggestion_data[i][1]
+        suggestions.append(artist_dict)
 
     return json.dumps(suggestions)
 

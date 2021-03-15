@@ -117,10 +117,10 @@ select {
 	color: white;
 }
 
-.orange{
+.least-color{
 	border-color: #003F91;
 }
-.orange:hover{
+.least-color:hover{
 	background-color:#003F91 !important;
 	color: white;
 }

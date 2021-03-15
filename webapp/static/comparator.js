@@ -444,11 +444,11 @@ function assignBarWidths(input1, input2, queryType){
 //colors the left and right bar of an attribute depending on which value is greater
 function colorAttributeBar(value1, value2, leftBar, rightBar){
     if (value1 > value2){
-        rightBar.classList.add("orange");
-        leftBar.classList.remove("orange");
+        rightBar.classList.add("least-color");
+        leftBar.classList.remove("least-color");
     }else{
-        leftBar.classList.add("orange");
-        rightBar.classList.remove("orange");
+        leftBar.classList.add("least-color");
+        rightBar.classList.remove("least-color");
     }
 }
 

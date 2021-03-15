@@ -8,8 +8,37 @@ var suggestions2 = [];
 
 //itinialize the page
 function initializeNewMusic() {
+    document.addEventListener('keydown', navigateWithArrows);
     assignArtistSearch();
 }
+
+//keyboard navigation
+function navigateWithArrows(key) {
+    var activeElement = document.activeElement;
+    //check if a suggestion button is already focussed
+    if(activeElement.parentElement.className == "top-options"){
+        var buttons = activeElement.parentElement.children;
+        if(key.code == "ArrowDown"){
+            key.preventDefault();
+            if(activeElement.nextElementSibling != null){
+                activeElement.nextElementSibling.focus();
+            }
+        }else if(key.code == "ArrowUp"){
+            key.preventDefault();
+            if(activeElement.previousElementSibling != null){
+                activeElement.previousElementSibling.focus();
+            }
+        }
+    //set focus to the first suggestion button if trying to get out of input
+}else if(activeElement.className == "option-input" && activeElement.parentElement.lastElementChild.firstElementChild != null){
+        if(key.code == "ArrowDown"){
+            key.preventDefault();
+            activeElement.parentElement.lastElementChild.firstElementChild.focus();
+        }
+    }
+
+}
+
 
 //creates autocomplete for artists
 function assignArtistSearch(){

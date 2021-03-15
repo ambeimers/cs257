@@ -158,6 +158,7 @@ def get_song_year_attribute(year, attribute_name):
 
 @api.route('/most/songs/year/<year>')
 def get_most_songs_year_attributes(year):
+    '''Get the songs with the most of an attribute for a given artist'''
     parameter = (str(year),) * 9
     query = '''
     (SELECT 'acousticness' as attribute, songs.spotify_id, songs.song_name, songs.acousticness as value FROM songs WHERE songs.year = %s ORDER BY acousticness DESC LIMIT 1) UNION
@@ -181,6 +182,7 @@ def get_most_songs_year_attributes(year):
 
 @api.route('/least/songs/year/<year>')
 def get_least_songs_year_attributes(year):
+    '''Get the songs with the least of an attribute for a given year'''
     parameter = (str(year),) * 9
     query = '''
     (SELECT 'acousticness' as attribute, songs.spotify_id, songs.song_name, songs.acousticness as value FROM songs WHERE songs.year = %s ORDER BY acousticness ASC LIMIT 1) UNION
@@ -202,9 +204,9 @@ def get_least_songs_year_attributes(year):
 
     return json.dumps(year_dict)
 
-
 @api.route('/most/songs/artist/<artist_id>')
 def get_most_songs_artist_attributes(artist_id):
+    '''Get the songs with the most of an attribute for a given artist'''
     parameter = (str(artist_id),) * 9
     query = '''
     (SELECT 'acousticness' as attribute, songs.spotify_id, songs.song_name, songs.acousticness as value FROM songs, songs_artists WHERE songs.id = songs_artists.song_id AND songs_artists.artist_id = %s ORDER BY acousticness DESC LIMIT 1) UNION
@@ -228,6 +230,7 @@ def get_most_songs_artist_attributes(artist_id):
 
 @api.route('/least/songs/artist/<artist_id>')
 def get_least_songs_artist_attributes(artist_id):
+    '''Get the songs with the least of an attribute for a given artist'''
     parameter = (str(artist_id),) * 9
     query = '''
     (SELECT 'acousticness' as attribute, songs.spotify_id, songs.song_name, songs.acousticness as value FROM songs, songs_artists WHERE songs.id = songs_artists.song_id AND songs_artists.artist_id = %s ORDER BY acousticness ASC LIMIT 1) UNION
@@ -251,6 +254,7 @@ def get_least_songs_artist_attributes(artist_id):
 
 @api.route('/artist/<artist1_id>/<artist2_id>/')
 def artist_suggestion(artist1_id, artist2_id):
+    '''Recomend 3 artists who have the closest attributes to the average of artist1 and artist2'''
     parameter = (str(artist1_id), str(artist2_id),str(artist1_id), str(artist2_id),)
     potential_attributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
     #some values are divided by a number which is the maximum range for that attribute (such as tempo) since they aren't normalized
@@ -279,6 +283,7 @@ def artist_suggestion(artist1_id, artist2_id):
 
 @api.route('/search/artist/<search_string>')
 def search_artist(search_string):
+    '''Gives 5 artist suggestions based on search string'''
     parameter = (str(search_string),)
     #levenshtein helps get closest string matches
     query = '''
@@ -298,6 +303,7 @@ def search_artist(search_string):
 
 @api.route('/search/song/<search_string>')
 def search_song(search_string):
+    '''Gives 5 song suggestions based on search string'''
     parameter = (str(search_string),)
     #levenshtein helps get closest string matches
     query = '''

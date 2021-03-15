@@ -63,9 +63,9 @@ REQUEST: /songs/artist/{artist_id}
 RESPONSE: A dictionary with the key being an attribute, and the value being another dictionary which has spotify_id, song_name, and spotify_id.
 The song corresponding to a particular attribute is the song by the given artist which has the highest value of the attribute.
 
-REQUEST: /recommend/?artist1={artist1_id}?artist2={artist2_id}?attribute_name={attribute}
+REQUEST: /artist/{artist1_id}/{artist2_if}
 RESPONSE: A list of JSON dictionaries, and within each dictionary, there is a key for artist_id and artist_name for the artist
-that matches artist1 and artist2 by an algorithm which will use attribute_name
+that matches artist1 and artist2.
 	recommended_artist1 -- dictionary
 	recommended_artist2 -- dictionary
 	recommended_artist3 -- dictionary
@@ -84,6 +84,37 @@ and sorts by how closely it matches
 	...
 	song5 -- dictionary
 
+REQUEST: /most/songs/artist/<artist_id>
+RESPONSE: A dictionary where each key is an attribute and each value is another dictionary containing information about the
+most song from that attribute and artist.
+	"popularity" -- dictionary
+	"danceability" -- dictionary
+	...
+	"tempo" -- dictionary
+
+REQUEST: /least/songs/artist/<artist_id>
+RESPONSE: A dictionary where each key is an attribute and each value is another dictionary containing information about the
+least song from that attribute and artist.
+	"popularity" -- dictionary
+	"danceability" -- dictionary
+	...
+	"tempo" -- dictionary
+
+REQUEST: /most/songs/year/<year>
+RESPONSE: A dictionary where each key is an attribute and each value is another dictionary containing information about the
+most song from that attribute and year.
+	"popularity" -- dictionary
+	"danceability" -- dictionary
+	...
+	"tempo" -- dictionary
+
+REQUEST: /least/songs/year/<year>
+RESPONSE: A dictionary where each key is an attribute and each value is another dictionary containing information about the
+least song from that attribute and year.
+	"popularity" -- dictionary
+	"danceability" -- dictionary
+	...
+	"tempo" -- dictionary
 
 EXAMPLES:
 /songs/year/2001

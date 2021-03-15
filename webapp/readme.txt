@@ -5,14 +5,10 @@ a built-in postgreSQL extension.
 
 DATA: Spotify music data for songs, years, and artists, with nine attributes describing their characteristics (eg danceability, tempo, etc).
 
-FEATURES CURRENTLY WORKING:
-- year comparator
-- artist comparator
-- navigation bar
+Copyright: Community Data License Agreement – Sharing – Version 1.0
 
-FEATURES NOT YET WORKING:
-- song comparator
-- new music generator
-    - api endpoint
-- artist/year Lookup
-- home page
+Data available for download here: https://www.kaggle.com/yamaerenay/spotify-dataset-19212020-160k-tracks?select=data_w_genres.csv
+
+STATUS: Everything is working.
+
+NOTES: Reminder to run "CREATE EXTENSION fuzzystrmatch;" in the postgres database in order to use the webapp.

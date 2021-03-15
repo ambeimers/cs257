@@ -5,166 +5,197 @@
 </head>
 <body>
     <pre>
-        Ann Beimers and Matthew Smith-Erb
+			Ann Beimers and Matthew Smith-Erb
 
-        REQUEST: /artist/{artist_id}
-        RESPONSE: A dictionary with each attribute of the artist being a key in the dictionary,
-        and the associated floating values as the dict value.
-        	artist_name -- string
-        	acousticness -- float
-        	danceability -- float
-        	duration -- integer
-        	energy -- float
-        	speechiness -- float
-        	loudness -- float
-        	tempo -- float
-        	popularity -- integer
-        	valence -- float
+			REQUEST: /artist/{artist_id}
+			RESPONSE: A dictionary with each attribute of the artist being a key in the dictionary,
+			and the associated floating values as the dict value.
+				artist_name -- string
+				acousticness -- float
+				danceability -- float
+				duration -- integer
+				energy -- float
+				speechiness -- float
+				loudness -- float
+				tempo -- float
+				popularity -- integer
+				valence -- float
 
-        REQUEST: /song/{song_id}
-        RESPONSE: A dictionary with each attribute of the song being a key in the dictionary,
-        and the associated floating values as the dict value.
-        	song_name -- string
-        	artist_name -- string
-        	acousticness -- float
-        	danceability -- float
-        	duration -- integer
-        	energy -- float
-        	speechiness -- float
-        	loudness -- float
-        	tempo -- float
-        	popularity -- integer
-        	valence -- float
-        	year -- integer
+			REQUEST: /song/{song_id}
+			RESPONSE: A dictionary with each attribute of the song being a key in the dictionary,
+			and the associated floating values as the dict value.
+				song_name -- string
+				artist_name -- string
+				acousticness -- float
+				danceability -- float
+				duration -- integer
+				energy -- float
+				speechiness -- float
+				loudness -- float
+				tempo -- float
+				popularity -- integer
+				valence -- float
+				year -- integer
 
-        REQUEST: /year/{integer_year}
-        RESPONSE: A dictionary with each attribute of the year being a key in the dictionary,
-        and the associated floating values as the dict value.
-        	acousticness -- float
-        	danceability -- float
-        	duration -- integer
-        	energy -- float
-        	speechiness -- float
-        	loudness -- float
-        	tempo -- float
-        	popularity -- integer
-        	valence -- float
+			REQUEST: /year/{integer_year}
+			RESPONSE: A dictionary with each attribute of the year being a key in the dictionary,
+			and the associated floating values as the dict value.
+				acousticness -- float
+				danceability -- float
+				duration -- integer
+				energy -- float
+				speechiness -- float
+				loudness -- float
+				tempo -- float
+				popularity -- integer
+				valence -- float
 
-        REQUEST: /song/artist/{artist_id}/{attribute_name}/?sort_by={most or least}
-        RESPONSE: A dictionary with song_id and song_name
-        	song_id -- string
-        	spotify_id -- string
-        	song_name -- string
+			REQUEST: /song/artist/{artist_id}/{attribute_name}/?sort_by={most or least}
+			RESPONSE: A dictionary with song_id and song_name
+				song_id -- string
+				spotify_id -- string
+				song_name -- string
 
-        REQUEST: /song/year/{year}/{attribute_name}/?sort_by={most or least}
-        RESPONSE: A dictionary with song_id and song_name
-        	song_id -- string
-        	spotify_id -- string
-        	song_name -- string
+			REQUEST: /song/year/{year}/{attribute_name}/?sort_by={most or least}
+			RESPONSE: A dictionary with song_id and song_name
+				song_id -- string
+				spotify_id -- string
+				song_name -- string
 
-        REQUEST: /songs/year/{year}
-        RESPONSE: A dictionary with the key being an attribute, and the value being another dictionary which has spotify_id, song_name, and spotify_id.
-        The song corresponding to a particular attribute is the song that came out in the year which has the highest value of the attribute.
+			REQUEST: /songs/year/{year}
+			RESPONSE: A dictionary with the key being an attribute, and the value being another dictionary which has spotify_id, song_name, and spotify_id.
+			The song corresponding to a particular attribute is the song that came out in the year which has the highest value of the attribute.
 
-        REQUEST: /songs/artist/{artist_id}
-        RESPONSE: A dictionary with the key being an attribute, and the value being another dictionary which has spotify_id, song_name, and spotify_id.
-        The song corresponding to a particular attribute is the song by the given artist which has the highest value of the attribute.
+			REQUEST: /songs/artist/{artist_id}
+			RESPONSE: A dictionary with the key being an attribute, and the value being another dictionary which has spotify_id, song_name, and spotify_id.
+			The song corresponding to a particular attribute is the song by the given artist which has the highest value of the attribute.
 
-        REQUEST: /recommend/?artist1={artist1_id}?artist2={artist2_id}?attribute_name={attribute}
-        RESPONSE: A list of JSON dictionaries, and within each dictionary, there is a key for artist_id and artist_name for the artist
-        that matches artist1 and artist2 by an algorithm which will use attribute_name
-        	recommended_artist1 -- dictionary
-        	recommended_artist2 -- dictionary
-        	recommended_artist3 -- dictionary
+			REQUEST: /artist/{artist1_id}/{artist2_if}
+			RESPONSE: A list of JSON dictionaries, and within each dictionary, there is a key for artist_id and artist_name for the artist
+			that matches artist1 and artist2.
+				recommended_artist1 -- dictionary
+				recommended_artist2 -- dictionary
+				recommended_artist3 -- dictionary
 
-        REQUEST: /search/artist/{search_string}
-        RESPONSE: A list of 5 JSON dictionaries, within each dictionary there is a key for artist_id and artist_name which matches the search string
-        and sorts by how closely it matches
-        	artist1 -- dictionary
-        	...
-        	artist5 -- dictionary
+			REQUEST: /search/artist/{search_string}
+			RESPONSE: A list of 5 JSON dictionaries, within each dictionary there is a key for artist_id and artist_name which matches the search string
+			and sorts by how closely it matches
+				artist1 -- dictionary
+				...
+				artist5 -- dictionary
 
-        REQUEST: /search/song/{search_string}
-        RESPONSE: A list of 5 JSON dictionaries, within each dictionary there is a key for song_id and song_name which matches the search string
-        and sorts by how closely it matches
-        	song1 -- dictionary
-        	...
-        	song5 -- dictionary
+			REQUEST: /search/song/{search_string}
+			RESPONSE: A list of 5 JSON dictionaries, within each dictionary there is a key for song_id and song_name which matches the search string
+			and sorts by how closely it matches
+				song1 -- dictionary
+				...
+				song5 -- dictionary
 
+			REQUEST: /most/songs/artist/<artist_id>
+			RESPONSE: A dictionary where each key is an attribute and each value is another dictionary containing information about the
+			most song from that attribute and artist.
+				"popularity" -- dictionary
+				"danceability" -- dictionary
+				...
+				"tempo" -- dictionary
 
-        EXAMPLES:
-        /songs/year/2001
-        {
-        	"valence":{
-        		"spotify_id":"5PgBfvyJOpcf9zmPJ3nH7w",
-        		"song_name":"Hijos de Su Santa Madre",
-        		"value":0.9840000000000001
-        	},
-        	"speechiness":{
-        		"spotify_id":"28IvFkxf9TBHdCIe3n1JWm",
-        		"song_name":"Because I Got High - Extended Version",
-        		"value":0.561
-        	},
-        	"danceability":{
-        		"spotify_id":"3MQmQowCMVhepBDEsuBXIm",
-        		"song_name":"Palmdale",
-        		"value":0.9740000000000001
-        	},
-        	"duration":{
-        		"spotify_id":"4Frp9uObfJLGLsMXosQp27",
-        		"song_name":"Baba Hanuman",
-        		"value":838560.0
-        	},
-        	"popularity":{
-        		"spotify_id":"5W8YXBz9MTIDyrpYaCg2Ky",
-        		"song_name":"Last Resort",
-        		"value":80.0
-        	},
-        	"energy":{
-        		"spotify_id":"0Y2i84QWPFiFHQfEQDgHya",
-        		"song_name":"People = Shit",
-        		"value":0.996
-        	},
-        	"tempo":{
-        		"spotify_id":"7AXTS96xScRsYLzEQMaTNK",
-        		"song_name":"Mi Fantasia",
-        		"value":208.125
-        	},
-        	"loudness":{
-        		"spotify_id":"3rGE2vjCx2loOdLKkIiE2O",
-        		"song_name":"Bad Reputation",
-        		"value":-1.249
-        	},
-        	"acousticness":{
-        		"spotify_id":"2MZSXhq4XDJWu6coGoXX1V",
-        		"song_name":"Avril 14th",
-        		"value":0.996
-        	}
-        }
+			REQUEST: /least/songs/artist/<artist_id>
+			RESPONSE: A dictionary where each key is an attribute and each value is another dictionary containing information about the
+			least song from that attribute and artist.
+				"popularity" -- dictionary
+				"danceability" -- dictionary
+				...
+				"tempo" -- dictionary
 
-        /search/artist/marven%20gaye
-        [
-        	{
-        		"id":18652,
-        		"artist_name":"Marvin Gaye"
-        	},
-        	{
-        		"id":30951,
-        		"artist_name":"Warren Hays"
-        	},
-        	{
-        		"id":6660,
-        		"artist_name":"Darren Tate"
-        	},
-        	{
-        		"id":11100,
-        		"artist_name":"Green Day"
-        	},
-        	{
-        		"id":336,
-        		"artist_name":"Aaron May"
-        	}
-        ]
+			REQUEST: /most/songs/year/<year>
+			RESPONSE: A dictionary where each key is an attribute and each value is another dictionary containing information about the
+			most song from that attribute and year.
+				"popularity" -- dictionary
+				"danceability" -- dictionary
+				...
+				"tempo" -- dictionary
+
+			REQUEST: /least/songs/year/<year>
+			RESPONSE: A dictionary where each key is an attribute and each value is another dictionary containing information about the
+			least song from that attribute and year.
+				"popularity" -- dictionary
+				"danceability" -- dictionary
+				...
+				"tempo" -- dictionary
+
+			EXAMPLES:
+			/songs/year/2001
+			{
+				"valence":{
+					"spotify_id":"5PgBfvyJOpcf9zmPJ3nH7w",
+					"song_name":"Hijos de Su Santa Madre",
+					"value":0.9840000000000001
+				},
+				"speechiness":{
+					"spotify_id":"28IvFkxf9TBHdCIe3n1JWm",
+					"song_name":"Because I Got High - Extended Version",
+					"value":0.561
+				},
+				"danceability":{
+					"spotify_id":"3MQmQowCMVhepBDEsuBXIm",
+					"song_name":"Palmdale",
+					"value":0.9740000000000001
+				},
+				"duration":{
+					"spotify_id":"4Frp9uObfJLGLsMXosQp27",
+					"song_name":"Baba Hanuman",
+					"value":838560.0
+				},
+				"popularity":{
+					"spotify_id":"5W8YXBz9MTIDyrpYaCg2Ky",
+					"song_name":"Last Resort",
+					"value":80.0
+				},
+				"energy":{
+					"spotify_id":"0Y2i84QWPFiFHQfEQDgHya",
+					"song_name":"People = Shit",
+					"value":0.996
+				},
+				"tempo":{
+					"spotify_id":"7AXTS96xScRsYLzEQMaTNK",
+					"song_name":"Mi Fantasia",
+					"value":208.125
+				},
+				"loudness":{
+					"spotify_id":"3rGE2vjCx2loOdLKkIiE2O",
+					"song_name":"Bad Reputation",
+					"value":-1.249
+				},
+				"acousticness":{
+					"spotify_id":"2MZSXhq4XDJWu6coGoXX1V",
+					"song_name":"Avril 14th",
+					"value":0.996
+				}
+			}
+
+			/search/artist/marven%20gaye
+			[
+				{
+					"id":18652,
+					"artist_name":"Marvin Gaye"
+				},
+				{
+					"id":30951,
+					"artist_name":"Warren Hays"
+				},
+				{
+					"id":6660,
+					"artist_name":"Darren Tate"
+				},
+				{
+					"id":11100,
+					"artist_name":"Green Day"
+				},
+				{
+					"id":336,
+					"artist_name":"Aaron May"
+				}
+			]
     </pre>
 </body>
 </html>

@@ -55,12 +55,11 @@ select {
 	width: 30%;
 	height: 100%;
 	background-color: #DCDCDC;
-	border-top-right-radius: 15px;
-	border-top-left-radius: 15px;
+	border-radius: 15px;
 }
 
 .suggestion {
-	height: 500px;
+	height: 65vh;
 }
 
 .webplayer-instruction{
@@ -77,7 +76,7 @@ select {
 	border-radius: 15px;
 	border-width: 0px;
 	width: 100%;
-	height: 60%;
+	height: 70%;
 }
 
 .option-input{

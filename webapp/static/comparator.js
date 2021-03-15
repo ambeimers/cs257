@@ -16,8 +16,37 @@ function initializeComparator() {
     var selection = document.getElementById("options");
     selection.addEventListener("change", onOptionChange);
 
+    document.addEventListener('keydown', navigateWithArrows);
+
     //set the defualts too
     onOptionChange();
+}
+
+//keyboard navigation
+function navigateWithArrows(key) {
+    var activeElement = document.activeElement;
+    //check if a suggestion button is already focussed
+    if(activeElement.parentElement.className == "top-options"){
+        var buttons = activeElement.parentElement.children;
+        if(key.code == "ArrowDown"){
+            key.preventDefault();
+            if(activeElement.nextElementSibling != null){
+                activeElement.nextElementSibling.focus();
+            }
+        }else if(key.code == "ArrowUp"){
+            key.preventDefault();
+            if(activeElement.previousElementSibling != null){
+                activeElement.previousElementSibling.focus();
+            }
+        }
+    //set focus to the first suggestion button if trying to get out of input
+    }else if(activeElement.className == "option-input" && activeElement.nextElementSibling.nextElementSibling.firstElementChild != null){
+        if(key.code == "ArrowDown"){
+            key.preventDefault();
+            activeElement.nextElementSibling.nextElementSibling.firstElementChild.focus();
+        }
+    }
+
 }
 
 //Changed the text for the input areas according to what they are searching

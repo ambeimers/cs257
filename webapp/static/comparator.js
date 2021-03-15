@@ -286,8 +286,15 @@ function query(queryType, input1obj, input2obj){
 
     //fill in instructions according to the query
     var instructionPlaceholders = document.getElementsByClassName("instruction-type");
-    instructionPlaceholders[0].innerHTML = queryType;
     instructionPlaceholders[1].innerHTML = queryType;
+    instructionPlaceholders[2].innerHTML = queryType;
+    //this is the top instructions
+    if(queryType == "song"){
+        instructionPlaceholders[0].innerHTML = queryType;
+    }else{
+        instructionPlaceholders[0].innerHTML = queryType + "'s average score for that attribute!";
+    }
+
 
     //parse correct info and assign labels
     try{

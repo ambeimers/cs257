@@ -2,6 +2,10 @@
 window.addEventListener("load", lookupInitialize);
 suggestions = [];
 
+//min and max years for checking input and generating selectable years
+const minYear = 1924;
+const maxYear = 2021;
+
 function lookupInitialize() {
     var selection = document.getElementById("options");
     selection.addEventListener("change", onOptionChange);
@@ -70,7 +74,7 @@ function onOptionChange(){
 function assignYearSearch(){
     hideSearchButtons();
     var datalistBody = "";
-    for (var y = 1924; y <= 2021; y++){
+    for (var y = minYear; y <= maxYear; y++){
         datalistBody += "<option>" + y + "</option>\n";
     }
     var yearDatalist = document.getElementById("year");
@@ -112,6 +116,26 @@ function validateArtist(inputObj){
 
     alert(artistName + " is not a valid artist");
     throw "invalid artist";
+}
+
+//ensure the string in the year input is a valid year
+function validateYear(input){
+    if (typeof input != "string"){
+        throw "input must be a string"
+    }
+
+    if(!isNaN(input)){
+        var year = parseInt(input, 10);
+        if(year < minYear || year > maxYear || isNaN(year)){
+            alert(year + " is out of range " + minYear +" - " + maxYear);
+            throw year + " is out of range " + minYear +" - " + maxYear;
+        }else{
+            return year;
+        }
+    }
+
+    alert("You must input a valid year");
+    throw "input must be a year";
 }
 
 //generates the autocoplete html
@@ -177,17 +201,22 @@ function query(queryType, inputobj){
         throw "queryType must be 'years' or 'artists'";
     }
 
-	document.getElementById("results").style.visibility = "visible";
-    document.getElementById("results-contents").style.visibility = "visible";
-
-    if(queryType == "year"){
-        var input = inputobj.value;
-    }else if(queryType == "artist"){
-        var artist = validateArtist(inputobj);
-        var input = artist.artistId;
-        hideSearchButtons();
-        document.getElementById("option_input").addEventListener("input", autoComplete);
+    try{
+        if(queryType == "year"){
+            var input = validateYear(inputobj.value);
+        }else if(queryType == "artist"){
+            var artist = validateArtist(inputobj);
+            var input = artist.artistId;
+            hideSearchButtons();
+            document.getElementById("option_input").addEventListener("input", autoComplete);
+        }
+    }catch(error){
+        console.log(error);
+        return;
     }
+
+    document.getElementById("results").style.visibility = "visible";
+    document.getElementById("results-contents").style.visibility = "visible";
 
     var allAttributes = ['acousticness', 'danceability', 'duration', 'energy', 'loudness', 'speechiness', 'tempo', 'valence', 'popularity']
 

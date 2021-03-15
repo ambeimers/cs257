@@ -6,6 +6,7 @@ window.addEventListener("load", initializeComparator);
 var suggestions1 = [];
 var suggestions2 = [];
 
+//min and max years for checking input and generating selectable years
 const minYear = 1924;
 const maxYear = 2021;
 
@@ -257,7 +258,7 @@ function validateYear(input){
 
     if(!isNaN(input)){
         var year = parseInt(input, 10);
-        if(year < minYear || year > maxYear){
+        if(year < minYear || year > maxYear || isNaN(year)){
             alert(year + " is out of range " + minYear +" - " + maxYear);
             throw year + " is out of range " + minYear +" - " + maxYear;
         }else{

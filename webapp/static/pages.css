@@ -116,6 +116,7 @@ select {
 	background-color: #4CAF50;
 	color: white;
 }
+
 .orange{
 	border-color: #003F91;
 }
@@ -142,6 +143,17 @@ select {
 	border-width: 1px;
 	border-style: solid;
 	border-top: none;
+	padding: 3px;
+	width: 60%;
+	text-align: left;
+}
+
+.top-options > button:focus, .top-options > button:hover{
+	font-family: 'Montserrat', sans-serif;
+	background-color: MintCream;
+	color: black;
+	border-width: 2px;
+	border-style: solid;
 	padding: 3px;
 	width: 60%;
 	text-align: left;

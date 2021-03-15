@@ -209,6 +209,11 @@ function query(queryType, input1obj, input2obj){
     	// Get a JSON object from each of the responses
     	return response.json();
     }).then(function (data) {
+
+				document.getElementById("name1").innerText = data[0].artist_name;
+				document.getElementById("name2").innerText = data[1].artist_name;
+				document.getElementById("name3").innerText = data[2].artist_name;
+
         var url1 = getAPIBaseURL() + "/song/artist/" + data[0].id + "/popularity";
         var url2 = getAPIBaseURL() + "/song/artist/" + data[1].id + "/popularity";
         var url3 = getAPIBaseURL() + "/song/artist/" + data[2].id + "/popularity";

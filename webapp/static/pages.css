@@ -36,6 +36,7 @@ select {
 	height: 80vh;
 	display: flex;
 	justify-content: space-evenly;
+	padding-top: 30px;
 }
 
 #attribute-contents {
@@ -58,9 +59,18 @@ select {
 	border-top-left-radius: 15px;
 }
 
+.suggestion {
+	height: 500px;
+}
+
 .webplayer-instruction{
 	padding: 15px;
 	text-align: left;
+}
+
+.webplayer-name{
+	padding: 15px;
+	text-align: center;
 }
 
 .webplayer{
